@@ -1,50 +1,35 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
-import store from './store'
+import Cell from './cell'
 
-// TODO things need to be able to be
-// initialized with {value: null}
-const initialState = {
-	cells: {
-		sqlId: {
-			type: 'sql',
-			value: { query: 'select * from FACT_TRIP' },
-		},
-		filterId: {
-			type: 'filter',
-			value: {
-				data: 'sqlId',
-				operator: 'LESS_THAN',
-				value: 100,
+const ADD_CELL = 'ADD_CELL'
+
+const cellAPI = null
+
+const simpleReducer = (state = { cells: {} }, { type, payload }) => {
+	if (type === ADD_CELL) {
+		return {
+			...state,
+			cells: {
+				...state.cells,
+				[payload]: true,
 			},
-		},
-		bigNumberId: {
-			type: 'number',
-			value: { format: ',' },
-		},
-		dashboardId: {
-			type: 'dashboard',
-			value: {
-				title: 'My Dashboard',
-				cells: [{ id: 'bigNumberId', width: 400, height: 200 }],
-			},
-		},
-	},
+		}
+	}
+	return state
 }
 
-const cellRenderer = {
-	sql: SqlCell,
-	filter: () => null,
-	number: () => null,
-	dashboard: () => null,
-}
+const defaultStore = createStore(combineReducers(simpleReducer))
 
-const Cells = () => {
+const Cells = ({ rootId, store = defaultStore }) => {
 	return (
 		<Provider store={store}>
-			<App />
+			<Cell id={rootId} />
 		</Provider>
 	)
 }
+
+export default Cells
