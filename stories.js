@@ -37,14 +37,16 @@ const cellStore = createStore((state = mockStore, a) => {
     return state
 })
 
-const stories = storiesOf('Cells', module)
-    .add('loading', () => (
+const stories = storiesOf('Cells', module).add('loading', () => {
+    console.log('about to render', cellStore, Cell)
+    return (
         <Provider store={cellStore}>
             <Cell id={'loadingCellId'} />
         </Provider>
-    ))
-    .add('sql', () => (
-        <Provider store={cellStore}>
-            <Cell id={'sqlCellId'} />
-        </Provider>
-    ))
+    )
+})
+// .add('sql', () => (
+//     <Provider store={cellStore}>
+//         <Cell id={'sqlCellId'} />
+//     </Provider>
+// ))
