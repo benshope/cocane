@@ -7,6 +7,7 @@ import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
 import Cell from './cell'
+import Layout from './layout'
 
 const mockStore = {
     cells: {
@@ -37,7 +38,9 @@ const cellStore = createStore((state = mockStore, a) => {
     return state
 })
 
-const stories = storiesOf('Cells', module).add('loading', () => {
+const stories = storiesOf('Cells', module)
+
+stories.add('loading', () => {
     console.log('about to render', cellStore, Cell)
     return (
         <Provider store={cellStore}>
@@ -45,8 +48,12 @@ const stories = storiesOf('Cells', module).add('loading', () => {
         </Provider>
     )
 })
-// .add('sql', () => (
+// stories.add('sql', () => (
 //     <Provider store={cellStore}>
 //         <Cell id={'sqlCellId'} />
 //     </Provider>
 // ))
+
+stories.add('layout', () => {
+    return <Layout />
+})
