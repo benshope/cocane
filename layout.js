@@ -1,6 +1,8 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
-import { zherebko, dagConnect } from 'd3-dag'
+import { dagConnect } from 'd3-dag'
 const d3 = require('d3')
+
+import zherebko from './zherebko'
 
 const exampleDAG = [
 	['Eve', 'Cain'],
@@ -15,7 +17,6 @@ function RenderNodes(props) {
 	const { width, height, nodeRadius, layout, dag } = props
 	const svgRef = useRef(null)
 	const renderGraph = useLayoutEffect(() => {
-		console.log('TRYING TO RENDER', svgRef.current, props)
 		const svgNode = svgRef.current
 		const nodeRadius = 20
 		const svgSelection = d3.select(svgNode)
@@ -34,6 +35,8 @@ function RenderNodes(props) {
 			.curve(d3.curveMonotoneX)
 			.x(d => d.y)
 			.y(d => d.x)
+
+		console.log('DAG SHAPE', dag.links())
 		// Plot edges
 		svgSelection
 			.append('g')
@@ -84,12 +87,11 @@ function RenderNodes(props) {
 			.attr('text-anchor', 'middle')
 			.attr('alignment-baseline', 'middle')
 			.attr('fill', 'white')
-		return () => {
+		return subscription => {
 			// Clean up the subscription
-			subscription.unsubscribe()
+			// subscription.unsubscribe()
 		}
 	})
-
 	return (
 		<svg
 			width={width}
