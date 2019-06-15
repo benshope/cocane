@@ -7,7 +7,7 @@ import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
 import Cell from './cell'
-import Layout from './layout'
+import Layout, { NotebookLayout } from './layout'
 
 const mockStore = {
     cells: {
@@ -56,4 +56,8 @@ stories.add('loading', () => {
 
 stories.add('layout', () => {
     return <Layout />
+})
+
+stories.add('notebook', () => {
+    return <NotebookLayout />
 })

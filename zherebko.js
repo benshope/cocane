@@ -9,15 +9,24 @@ export default function() {
     let indexer = greedy()
 
     function zherebko(dag) {
+        console.log('\n\n\n\n\n\n\n\n\n\n\ndag', JSON.stringify(dag, null, 2))
         // Topological Sort
         const ordered = []
         dag.eachBefore((node, i) => {
             node.layer = i
             ordered.push(node)
         })
+        console.log(
+            '\n\n\n\n\n\n\n\n\n\n\nordered',
+            JSON.stringify([...ordered], null, 2)
+        )
 
         // Get indices
         indexer(ordered)
+        console.log(
+            '\n\n\n\n\n\n\n\n\n\n\nindexed',
+            JSON.stringify([...ordered], null, 2)
+        )
 
         // Map to coordinates
         let minIndex = 0
