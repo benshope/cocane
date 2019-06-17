@@ -12,7 +12,6 @@ const cellRenderers = {
 // initialized with {value: null}
 const Cell = connect(({ cells }) => ({ cells }))(({ id, cells }) => {
 	// dispatchGetCell
-	console.log('EEEEEE', cells, id)
 	return cells[id]
 		? cellRenderers[cells[id].type]({ id })
 		: `Loading ${id}...`
