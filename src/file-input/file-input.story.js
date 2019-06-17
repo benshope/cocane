@@ -6,10 +6,9 @@ import ReactDOM from 'react-dom'
 import { createStore, combineReducers } from 'redux'
 import { Provider, connect } from 'react-redux'
 
-import FileInputCell, { reducer } from './cell-file-input'
+import FileInputCell, { reducer } from './file-input'
 
 const cellStore = createStore((state = {}, a) => {
-	console.log('store called', a, reducer(state, a))
 	action('action')(a)
 	return reducer(state, a)
 })

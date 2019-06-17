@@ -102,12 +102,8 @@ export const reducer = (state, { type, payload }) => {
 
 function FileInput({ id, onFileInput }) {
 	const onChange = e => {
-		console.log('calling onFileInput')
-		onFileInput('merp')
-		console.log('onChange', e)
 		const reader = new FileReader()
 		reader.onload = function(e) {
-			console.log('onload', e)
 			onFileInput({
 				data: reader.result,
 				id,

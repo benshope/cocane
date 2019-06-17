@@ -4,7 +4,7 @@ import { withInfo } from '@storybook/addon-info'
 addDecorator(withInfo({ inline: true }))
 
 function loadStories() {
-	require('../stories'), require('../cell-file-input.story')
+	require('../src/file-input/file-input.story')
 }
 
 configure(loadStories, module)
