@@ -12,6 +12,17 @@ Cells are visual components for handling data. Each cell performs a single opera
 
 Cells can be combined so that, for example, one filter-cell can limit the data shown on several charts-cells.
 
+## Roadmap
+
+-   Notebook layout cell (registers key commands)
+-   Pipe file-input into SQL
+-   SQL cell
+-   Recommendations cell
+-   Filter cell
+-   Table cell
+-   Flex layout (dashboard) cell (registers key commands)
+-   Fix global key commands
+
 ## Install
 
 -   **Npm:** `npm install react-cells`
