@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/modal-hook.svg)](https://www.npmjs.com/package/modal-hook)
 [![npm downloads](https://img.shields.io/npm/dm/modal-hook.svg)](https://www.npmjs.com/package/modal-hook)
 
-Cells are visual components. Each cell performs a single operation such as:
+Cells are visual components for handling data. Each cell performs a single operation such as:
 
 -   load data
 -   filter data
@@ -19,7 +19,7 @@ Cells can be combined so that, for example, one filter-cell can limit the data s
 
 ## Options
 
-See the [examples](https://benshope.github.io/modal-hook) and the [examples source code](https://github.com/benshope/modal-hook/blob/master/stories.js) for more snippets to copy.
+See the [examples](https://benshope.github.io/cells) for usage information and snippets to copy.
 
 ## Help
 
