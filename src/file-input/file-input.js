@@ -6,9 +6,8 @@ import { csvParse } from "d3-dsv";
 const TYPE = "FILE_INPUT";
 
 const CellBoxDiv = styled.div`
-	font-family: "UberMove", "Helvetica Neue", Helvetica, sans-serif;
 	font-weight: 500;
-
+	line-height: 1.5em;
 	.file-input {
 		width: 0.1px;
 		height: 0.1px;
@@ -19,17 +18,16 @@ const CellBoxDiv = styled.div`
 	}
 
 	.file-input + label {
-		font-size: 1.25rem;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		cursor: pointer;
 		display: inline-block;
 		overflow: hidden;
-		padding: 0.625rem 1.25rem;
+		border-radius: 0.75em;
 	}
 
-	.file-input:focus label {
-		outline: 1px dotted #000;
+	.file-input:focus + label {
+		border: 1px dotted #000;
 	}
 
 	.file-input + label svg {
@@ -55,11 +53,6 @@ const CellBoxDiv = styled.div`
 		border-color: hsl(0, 0%, 10%);
 	}
 
-	.file-input + label .mock-input,
-	.file-input + label .mock-button {
-		padding: 0.625rem 1.25rem;
-	}
-
 	.file-input + label .mock-input {
 		width: 200px;
 		flex: 1;
@@ -77,6 +70,7 @@ const CellBoxDiv = styled.div`
 		color: white;
 		background-color: black;
 		display: inline-block;
+		padding: 0 0.75em;
 	}
 
 	.file-input:focus + label .mock-button,
