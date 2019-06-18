@@ -4,39 +4,38 @@ import { connect } from "react-redux";
 
 const TYPE = "INPUT";
 
-const SET_INPUT = "SET_INPUT";
+const SET_INPUT_VALUE = "SET_INPUT_VALUE";
 const setInputAction = payload => ({
-  type: SET_INPUT,
+  type: SET_INPUT_VALUE,
   payload
 });
 
 const reducer = (state, { type, payload }) => {
-  if (type === SET_INPUT) {
-    const { id, ...restOfPayload } = payload;
+  if (type === SET_INPUT_VALUE) {
+    const { id, value } = payload;
     return {
       ...state,
-      [id]: restOfPayload
+      [id]: { ...state[id], value }
     };
   }
   return state;
 };
 
-const Input = ({ state, id, setInput }) => {
-  const inputState = state[id];
+const Input = ({ value, type = "number", onChange }) => {
   return (
     <input
-      type="number"
-      value={inputState.value}
-      onChange={e =>
-        setInput({ ...inputState, id, value: e.currentTarget.value })
-      }
+      type={type}
+      value={value}
+      onChange={e => onChange(e.currentTarget.value)}
     />
   );
 };
 
 const ConnectedInput = connect(
-  state => ({ state }),
-  { setInput: setInputAction }
+  (state, { id }) => ({ id, ...state[id] }),
+  (_, { id }) => ({
+    onChange: value => setInputAction({ id, value })
+  })
 )(Input);
 
 export default {

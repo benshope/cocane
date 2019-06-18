@@ -51,6 +51,7 @@ const Select = styled.select`
 export const SingleSelect = ({ options = [], onChange, ...props }) => {
   return (
     <Select {...props} onChange={e => onChange(e.currentTarget.value)}>
+      {!props.value ? <option value="">Please choose an option</option> : null}
       {options.map(({ name, value }) => (
         <option key={value} value={value}>
           {name}

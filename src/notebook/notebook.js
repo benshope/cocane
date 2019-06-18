@@ -98,7 +98,7 @@ const Notebook = ({
 			<AddComponentDiv>
 				<SingleSelect
 					onChange={option => addComponent({ type: option, id })}
-					value={undefined}
+					value=""
 					options={componentList.map(component => ({
 						value: component.type,
 						name: component.name
