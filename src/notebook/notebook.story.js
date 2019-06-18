@@ -3,9 +3,10 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { createStore } from "redux";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 
 import { ConnectedNotebook, reducer } from "./notebook";
+import StoreViewer from "../store-viewer/store-viewer";
 
 const cellStore = createStore(
 	(state = { notebook1: { type: "NOTEBOOK", components: [] } }, a) => {
@@ -15,10 +16,6 @@ const cellStore = createStore(
 );
 
 const stories = storiesOf("Notebook", module);
-
-const StoreViewer = connect(state => ({ ...state }))(state => (
-	<div>{JSON.stringify(state, null, 4)}</div>
-));
 
 // TODO illustrate reducers & async
 stories.add("component", () => {

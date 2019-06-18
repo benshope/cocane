@@ -3,9 +3,10 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { createStore } from "redux";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 
 import { ConnectedFileInput, reducer } from "./file-input";
+import StoreViewer from "../store-viewer/store-viewer";
 
 const cellStore = createStore((state = {}, a) => {
 	action("action")(a);
@@ -13,10 +14,6 @@ const cellStore = createStore((state = {}, a) => {
 });
 
 const stories = storiesOf("File Input", module);
-
-const StoreViewer = connect(state => ({ ...state }))(state => (
-	<div>{JSON.stringify(state, null, 4)}</div>
-));
 
 stories.add("component", () => {
 	return (
