@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { components as fileInputComponents } from "../file-input/file-input";
+import {
+	components as fileInputComponents,
+	reducer as fileInputReducer
+} from "../file-input/file-input";
 
 const NotebookDiv = styled.div`
 	position: relative;
@@ -24,15 +27,21 @@ const removeComponentAction = payload => ({
 	payload
 });
 
-export const reducer = (state, { type, payload }) => {
+export const reducer = (oldState, action) => {
+	const state = fileInputReducer(oldState, action);
+	const { type, payload } = action;
 	if (type === ADD_COMPONENT) {
 		const componentID = Math.random().toString(36);
+		console.log("trying to add component", payload);
 		return {
 			...state,
 			[componentID]: { type: payload.type },
 			[payload.id]: {
 				...state[payload.id],
-				components: [...(state[payload.id] || []), componentID]
+				components: [
+					...(state[payload.id].components || []),
+					componentID
+				]
 			}
 		};
 	}
@@ -54,33 +63,42 @@ const componentsByType = componentList.reduce((acc, component) => {
 	return acc;
 }, {});
 
-function FileInput({
+const Notebook = ({
 	id,
-	// addComponent,
+	addComponent,
 	// removeComponent,
 	state
-}) {
+}) => {
+	console.log("state", state);
 	// TODO make searchable
 	// TODO create generic component - intersection of all
 	return (
 		<NotebookDiv>
 			<input type="text" placeholder="Search..." />
-			{state[id].components.map(componentID => {
+			{(state[id] ? state[id].components : []).map(componentID => {
+				console.log("componentID", componentID);
 				const componentState = state[componentID];
 				const Component =
 					componentsByType[componentState.type].component;
-				return <Component id={componentID} />;
+				return <Component key={componentID} id={componentID} />;
 			})}
 			<AddComponentDiv>
-				{componentsByType.map(component => (
-					<button>{component.name}</button>
+				{componentList.map(component => (
+					<button
+						onClick={() =>
+							addComponent({ type: component.type, id })
+						}
+						key={component.type}
+					>
+						{component.name}
+					</button>
 				))}
 			</AddComponentDiv>
 		</NotebookDiv>
 	);
-}
+};
 
-export default connect(
-	state => state,
+export const ConnectedNotebook = connect(
+	state => ({ state }),
 	{ addComponent: addComponentAction, removeComponent: removeComponentAction }
-)(FileInput);
+)(Notebook);

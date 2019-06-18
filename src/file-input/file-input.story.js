@@ -15,7 +15,7 @@ const cellStore = createStore((state = {}, a) => {
 const stories = storiesOf("File Input", module);
 
 const StoreViewer = connect(state => ({ ...state }))(state => (
-	<div>{JSON.stringify(state)}</div>
+	<div>{JSON.stringify(state, null, 4)}</div>
 ));
 
 stories.add("component", () => {
