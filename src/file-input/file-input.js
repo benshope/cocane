@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { connect } from 'react-redux'
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
-const TYPE = 'FILE_INPUT'
+const TYPE = "FILE_INPUT";
 
 const CellBoxDiv = styled.div`
-	font-family: 'UberMove', 'Helvetica Neue', Helvetica, sans-serif;
+	font-family: "UberMove", "Helvetica Neue", Helvetica, sans-serif;
 	font-weight: 500;
 
 	.inputfile {
@@ -83,15 +83,15 @@ const CellBoxDiv = styled.div`
 	.inputfile-6 + label:hover .mock-button {
 		background-color: hsl(0, 0%, 10%);
 	}
-`
+`;
 
-const LOAD_DATA_FROM_FILE = 'LOAD_DATA_FROM_FILE'
+const LOAD_DATA_FROM_FILE = "LOAD_DATA_FROM_FILE";
 const addFileAction = payload => ({
 	type: LOAD_DATA_FROM_FILE,
-	payload,
-})
+	payload
+});
 
-export const reducer = (state, { type, payload }) => {
+const reducer = (state, { type, payload }) => {
 	// if (type === ADD_COMPONENT && payload.type === COMPONENT_TYPE) {
 	// 	return { ...state, [payload.id]: payload }
 	// }
@@ -100,28 +100,28 @@ export const reducer = (state, { type, payload }) => {
 			...state,
 			[payload.id]: {
 				...state[payload.id],
-				data: payload.data,
-			},
-		}
+				data: payload.data
+			}
+		};
 		// TODO: see if there is a reference to this ID
 		// and if there isn't - create a new viewer?
 		// or a temporary viewer?
 		// TODO add this logic within the notebook view?
 	}
-	return state
-}
+	return state;
+};
 
-function FileInput({ id, addFile }) {
+const FileInput = ({ id, addFile }) => {
 	const onChange = e => {
-		const reader = new FileReader()
-		reader.onload = function(e) {
+		const reader = new FileReader();
+		reader.onload = () => {
 			addFile({
 				data: reader.result,
-				id,
-			})
-		}
-		reader.readAsText(e.target.files[0])
-	}
+				id
+			});
+		};
+		reader.readAsText(e.target.files[0]);
+	};
 
 	return (
 		<CellBoxDiv>
@@ -149,14 +149,17 @@ function FileInput({ id, addFile }) {
 				</div>
 			</label>
 		</CellBoxDiv>
-	)
-}
+	);
+};
 
-export const ConnectedFileInput = connect(
+const ConnectedFileInput = connect(
 	state => state,
 	{ addFile: addFileAction }
-)(FileInput)
+)(FileInput);
 
-export const components = [
-	{ name: 'File Input', type: TYPE, component: ConnectedFileInput },
-]
+export default {
+	name: "File Input",
+	type: TYPE,
+	component: ConnectedFileInput,
+	reducer
+};
