@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import {default as lodashDebounce} from 'lodash/fp/debounce';
 

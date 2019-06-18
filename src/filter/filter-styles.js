@@ -1,9 +1,8 @@
-// @flow
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import {Input, Select} from '../inputs-styles';
-import {ButtonGroup} from '../button';
-import {theme} from '../theme';
+import { Input, Select } from "../inputs-styles";
+import { ButtonGroup } from "../button";
+import { theme } from "../theme";
 
 export const FilterSelect = styled(Select)`
   &:not(:last-child) {
@@ -22,7 +21,7 @@ export const FilterInput = styled(Input)`
 
 export const FilterHeaderDiv = styled.div`
   display: block;
-  font-family: ${theme(['primaryFontFamily'])};
+  font-family: ${theme(["primaryFontFamily"])};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,8 +35,8 @@ export const FilterHeaderDiv = styled.div`
 `;
 
 export const MinAndMaxDiv = styled.div`
-  font-family: ${theme(['primaryFontFamily'])};
-  color: ${theme(['colors', 'mono800'])};
+  font-family: ${theme(["primaryFontFamily"])};
+  color: ${theme(["colors", "mono800"])};
   display: flex;
   justify-content: space-between;
   font-size: 0.75em;

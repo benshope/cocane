@@ -48,7 +48,7 @@ const Select = styled.select`
   }
 `;
 
-const SingleSelect = ({ value, onChange, options }) => {
+const SingleSelect = ({ value, onChange, options = [] }) => {
   return (
     <Select value={value} onChange={onChange}>
       {options.map(({ key, value }) => (

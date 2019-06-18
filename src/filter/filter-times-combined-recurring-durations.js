@@ -1,4 +1,3 @@
-// @flow
 import {combineFilters} from './combine-filters';
 import filterTimeByHourOfDay from './filter-times-by-hour-of-day';
 import filterTimeByDayOfWeek from './filter-times-by-day-of-week';

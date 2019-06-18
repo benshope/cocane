@@ -1,23 +1,22 @@
-// @flow
-import type {Node} from 'react';
-import type {Bin} from '../histogram';
+import type { Node } from "react";
+import type { Bin } from "../histogram";
 export type DataPoint = string | number | boolean | null | void;
 export type DataArray = $ReadOnlyArray<DataPoint>;
 
-export type Action = {type: string, payload: Object};
+export type Action = { type: string, payload: Object };
 
 type FilterDataLoading = {|
-  +status: 'loading'
+  +status: "loading"
 |};
 
 export type FilterDataLoaded<T> = {|
   +data: T,
-  +status: 'loaded'
+  +status: "loaded"
 |};
 
 type FilterDataError = {|
   +error: Error,
-  +status: 'error'
+  +status: "error"
 |};
 
 export type FilterCommon<T> = {|
@@ -36,7 +35,7 @@ export type EditorProps<Filter, UIProps> = {|
   ...UIProps,
   +filter: FilterCommon<Filter>,
   +dispatch: (action: Action) => void,
-  +enabledTypes: {[filterType: string]: string},
+  +enabledTypes: { [filterType: string]: string },
   // TEMPORARY PROPS FOR DASHBUILDER LIMITS
   +disableNot?: boolean,
   +disableSelectAll?: boolean,
@@ -49,7 +48,7 @@ type BaseFilterComponent<Filter, UIProps> = {|
   +editor: (props: EditorProps<Filter, UIProps>) => Node,
   +text: (filter: Filter) => Node,
   +filterValue?: (filter: Filter) => (value: DataPoint) => boolean,
-  +filterAll?: (filter: {...Filter, field: string}) => (
+  +filterAll?: (filter: { ...Filter, field: string }) => (
     values: DataArray
   ) => DataArray,
   +createFilter: (filter?: $Shape<FilterCommon<Filter>>) => Filter
@@ -63,8 +62,10 @@ export type FilterComponent<FilterType, UIProps> = {|
 
 export type FilterComponents<FilterType, UIProps> = {|
   ...BaseFilterComponent<FilterCommon<FilterType>, UIProps>,
-  +reducers: {[filterType: string]: (state: Object, action: Object) => Object},
-  +filterTypes: {[filterType: string]: string}
+  +reducers: {
+    [filterType: string]: (state: Object, action: Object) => Object
+  },
+  +filterTypes: { [filterType: string]: string }
 |};
 
 export type NumbersCreator = (data: DataArray) => $ReadOnlyArray<number>;

@@ -1,18 +1,17 @@
-// @flow
-import React from 'react';
+import React from "react";
 
-import {WideButtonGroup} from './filter-styles';
-import {updateFilter} from './filter-actions';
+import { WideButtonGroup } from "./filter-styles";
+import { updateFilter } from "./filter-actions";
 
-import type {FilterComponents} from './filter-types';
+import type { FilterComponents } from "./filter-types";
 
 const preservedValue = (oldFilter, newFilter) => {
   const arrayFrom = (v: number | [number, number]) =>
     Array.isArray(v)
       ? v
       : newFilter.value === Infinity
-        ? [v, Infinity]
-        : [-Infinity, v];
+      ? [v, Infinity]
+      : [-Infinity, v];
   const valueFrom = (v: number | [number, number]) =>
     Array.isArray(v) ? (newFilter.value === Infinity ? v[1] : v[0]) : v;
   return {
@@ -43,7 +42,7 @@ const editorWithButtons = (
       <div>
         {filterButtons.length > 1 && (
           <WideButtonGroup>
-            {filterButtons.map(({label, filter, operator}) => (
+            {filterButtons.map(({ label, filter, operator }) => (
               <button
                 title={label}
                 disabled={
@@ -67,7 +66,7 @@ const editorWithButtons = (
                       ...(preserveValueOnTypeChange
                         ? preservedValue(props.filter, newFilter)
                         : {}),
-                      ...(operator ? {operator} : {})
+                      ...(operator ? { operator } : {})
                     })
                   );
                 }}
@@ -86,10 +85,14 @@ const editorWithButtons = (
 };
 
 export function combineFilters<OneFilter, UIProps>(
-  filters: $ReadOnlyArray<{label?: string, operator?: string, filter: Object}>,
+  filters: $ReadOnlyArray<{
+    label?: string,
+    operator?: string,
+    filter: Object
+  }>,
   preserveValueOnTypeChange?: boolean
 ): FilterComponents<OneFilter, UIProps> {
-  const filtersByType = filters.reduce((acc, {filter}) => {
+  const filtersByType = filters.reduce((acc, { filter }) => {
     if (filter.filterType) {
       acc[filter.filterType] = filter;
     }
@@ -102,9 +105,9 @@ export function combineFilters<OneFilter, UIProps>(
   }, {});
   return {
     filterTypes: filters.reduce(
-      (acc, {filter}) => ({
+      (acc, { filter }) => ({
         ...acc,
-        ...(filter.filterTypes || {[filter.filterType]: filter.filterType})
+        ...(filter.filterTypes || { [filter.filterType]: filter.filterType })
       }),
       {}
     ),
@@ -131,10 +134,10 @@ export function combineFilters<OneFilter, UIProps>(
       ).createFilter(partialFilter);
     },
     reducers: filters.reduce(
-      (acc, {filter}) => ({
+      (acc, { filter }) => ({
         ...acc,
         ...(filter.filterType
-          ? {[filter.filterType]: filter.reducers}
+          ? { [filter.filterType]: filter.reducers }
           : filter.reducers)
       }),
       {}

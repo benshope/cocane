@@ -1,25 +1,24 @@
-// @flow
-import {differenceInCalendarDays} from 'date-fns';
+import { differenceInCalendarDays } from "date-fns";
 
 import type {
   FilterLinearRange,
   FilterLinearUIProps
-} from './filter-generic-linear';
+} from "./filter-generic-linear";
 import {
   FilterEditorLinearRange,
   VALUES_OPERATORS
-} from './filter-generic-linear';
+} from "./filter-generic-linear";
 import {
   dateFormatter,
   validDateNumber,
   validDate,
   filterDateReducers
-} from './filter-times-common';
-import {updateFilter} from './filter-actions';
+} from "./filter-times-common";
+import { updateFilter } from "./filter-actions";
 
-import type {FilterComponent} from './filter-types';
+import type { FilterComponent } from "./filter-types";
 
-const TYPE = 'DATE_RANGE';
+const TYPE = "DATE_RANGE";
 
 export type UIProps = {|
   ...FilterLinearUIProps,
@@ -31,13 +30,13 @@ export type FilterType = {|
   +timezone?: string
 |};
 
-const FilterText = ({not, value, timezone, type}) => {
+const FilterText = ({ not, value, timezone, type }) => {
   if (!validDate(value[0]) || !validDate(value[1])) {
-    return 'Invalid value';
+    return "Invalid value";
   }
   const description = `${dateFormatter.format(
     value[0]
-  )} to ${dateFormatter.format(value[1])} ${timezone || ''}`;
+  )} to ${dateFormatter.format(value[1])} ${timezone || ""}`;
   return not ? `Not ${description.toLowerCase()}` : description;
 };
 
@@ -46,15 +45,15 @@ const FilterEditor = p => {
     dispatch,
     extent,
     histogram,
-    filter: {value}
+    filter: { value }
   } = p;
   return FilterEditorLinearRange({
     extent,
     histogram,
     value: [...value],
     operator: VALUES_OPERATORS.BETWEEN,
-    onChange: v => dispatch(updateFilter({...p.filter, value: v})),
-    inputType: 'date'
+    onChange: v => dispatch(updateFilter({ ...p.filter, value: v })),
+    inputType: "date"
   });
 };
 
@@ -65,9 +64,9 @@ export const isTimeBetweenDays = (value: [number, number], point: number) =>
 export default ({
   text: FilterText,
   editor: FilterEditor,
-  filterValue: ({value}) => dataPoint => {
+  filterValue: ({ value }) => dataPoint => {
     const datePoint = validDateNumber(dataPoint);
-    return typeof datePoint === 'number' && isTimeBetweenDays(value, datePoint);
+    return typeof datePoint === "number" && isTimeBetweenDays(value, datePoint);
   },
   createFilter: filter => {
     return {

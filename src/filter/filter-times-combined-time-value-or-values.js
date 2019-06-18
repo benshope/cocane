@@ -1,4 +1,3 @@
-// @flow
 import {combineFilters} from './combine-filters';
 import {VALUE_OPERATORS} from './filter-generic-linear';
 import filterTimeByValues from './filter-times-by-time-values';

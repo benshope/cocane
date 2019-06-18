@@ -1,19 +1,18 @@
-// @flow
-import React from 'react';
-import memoize from 'memoize-one';
+import React from "react";
+import memoize from "memoize-one";
 
-import {sentenceJoin} from '../string-utils';
-import MultiSelect from '../multi-select';
+import { sentenceJoin } from "../string-utils";
+import MultiSelect from "../multi-select";
 import {
   UPDATE_FILTER,
   GET_DATA_ARRAY,
   GET_DATA_QUERY_RESULTS,
   updateFilter
-} from './filter-actions';
+} from "./filter-actions";
 
-import type {FilterComponent, Action, FilterData} from './filter-types';
+import type { FilterComponent, Action, FilterData } from "./filter-types";
 
-const TYPE = 'LIST';
+const TYPE = "LIST";
 
 export type UIProps = {|
   +filterType: typeof TYPE,
@@ -24,11 +23,11 @@ export type FilterType = {|
   +value: string[]
 |};
 
-function FilterText({not, value}) {
+function FilterText({ not, value }) {
   if (!value || !value.length) {
-    return `${not ? 'Any' : 'No'} value`;
+    return `${not ? "Any" : "No"} value`;
   }
-  const descriptionValues = sentenceJoin(value, ' and ');
+  const descriptionValues = sentenceJoin(value, " and ");
   const description =
     value.length > 3
       ? `${value.length} values: ${descriptionValues}`
@@ -37,10 +36,10 @@ function FilterText({not, value}) {
 }
 
 function FilterEditor(props) {
-  const {filter, disableSelectAll, dispatch, data} = props;
+  const { filter, disableSelectAll, dispatch, data } = props;
   // TODO: make empty state better
   // TODO: make loading state better
-  return data.status === 'loaded' && data.data.length ? (
+  return data.status === "loaded" && data.data.length ? (
     <div>
       <MultiSelect
         key="select-filter-values"
@@ -60,22 +59,22 @@ function FilterEditor(props) {
       />
     </div>
   ) : (
-    'No values to filter'
+    "No values to filter"
   );
 }
 
 const memoizeAsStrings = memoize(data => data.map(x => x.toString()));
 
-const getDataArrayReducer = (_, {payload: {data}}) => ({
-  data: {status: 'loaded', data: memoizeAsStrings(data)}
+const getDataArrayReducer = (_, { payload: { data } }) => ({
+  data: { status: "loaded", data: memoizeAsStrings(data) }
 });
 
-const getDataQueryResultsReducer = (_, {payload: {data}}) => ({
+const getDataQueryResultsReducer = (_, { payload: { data } }) => ({
   data
 });
 
 const updateFilterReducer = (_, __) => ({
-  data: {status: 'loading'}
+  data: { status: "loading" }
 });
 
 export default ({

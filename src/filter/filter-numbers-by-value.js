@@ -1,41 +1,40 @@
-// @flow
-import React from 'react';
+import React from "react";
 
 import type {
   FilterLinearSingle,
   FilterLinearUIProps
-} from './filter-generic-linear';
+} from "./filter-generic-linear";
 import {
   FilterEditorLinearSingle,
   filterNumberByNumber,
   VALUE_OPERATORS
-} from './filter-generic-linear';
-import {numberFormatter, filterNumberReducers} from './filter-numbers-common';
+} from "./filter-generic-linear";
+import { numberFormatter, filterNumberReducers } from "./filter-numbers-common";
 
-import {WideButtonGroup} from './filter-styles';
-import {updateFilter} from './filter-actions';
+import { WideButtonGroup } from "./filter-styles";
+import { updateFilter } from "./filter-actions";
 
-import type {FilterComponent} from './filter-types';
+import type { FilterComponent } from "./filter-types";
 
-const TYPE = 'NUMBER';
+const TYPE = "NUMBER";
 
 const readableOperator = {
-  LESS_THAN: 'Less than',
-  LESS_THAN_OR_EQUAL_TO: 'Less than or equal to',
-  EQUAL_TO: 'Equal to',
-  GREATER_THAN_OR_EQUAL_TO: 'Greater than or equal to',
-  GREATER_THAN: 'Greater than'
+  LESS_THAN: "Less than",
+  LESS_THAN_OR_EQUAL_TO: "Less than or equal to",
+  EQUAL_TO: "Equal to",
+  GREATER_THAN_OR_EQUAL_TO: "Greater than or equal to",
+  GREATER_THAN: "Greater than"
 };
 
 const symbolForOperator = {
-  LESS_THAN: '<',
-  LESS_THAN_OR_EQUAL_TO: '<=',
-  EQUAL_TO: '=',
-  GREATER_THAN_OR_EQUAL_TO: '>=',
-  GREATER_THAN: '>'
+  LESS_THAN: "<",
+  LESS_THAN_OR_EQUAL_TO: "<=",
+  EQUAL_TO: "=",
+  GREATER_THAN_OR_EQUAL_TO: ">=",
+  GREATER_THAN: ">"
 };
 
-const FilterText = ({operator, not, value}) => {
+const FilterText = ({ operator, not, value }) => {
   const description = `${readableOperator[operator]} ${numberFormatter(value)}`;
   return not ? `Not ${description.toLowerCase()}` : description;
 };
@@ -52,8 +51,8 @@ export type FilterType = {|
 |};
 
 const FilterEditor = props => {
-  const {extent, histogram} = props;
-  const {operator = VALUE_OPERATORS.GREATER_THAN, value} = props.filter;
+  const { extent, histogram } = props;
+  const { operator = VALUE_OPERATORS.GREATER_THAN, value } = props.filter;
   return (
     <div>
       {!props.disableNumberOperators && (
@@ -82,9 +81,9 @@ const FilterEditor = props => {
         histogram,
         value,
         onChange: v =>
-          props.dispatch(updateFilter({...props.filter, operator, value: v})),
+          props.dispatch(updateFilter({ ...props.filter, operator, value: v })),
         operator,
-        inputType: 'number'
+        inputType: "number"
       })}
     </div>
   );
@@ -93,7 +92,7 @@ const FilterEditor = props => {
 export default ({
   text: FilterText,
   editor: FilterEditor,
-  filterValue: ({not, value, operator}) => dataPoint =>
+  filterValue: ({ not, value, operator }) => dataPoint =>
     filterNumberByNumber[operator](parseFloat(value), parseFloat(dataPoint)),
   createFilter: filter => ({
     filterType: TYPE,

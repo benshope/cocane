@@ -1,14 +1,13 @@
-// @flow
-import memoize from 'memoize-one';
-import {extent} from 'd3-array';
-import window from 'global/window';
+import memoize from "memoize-one";
+import { extent } from "d3-array";
+import window from "global/window";
 
-import {validHistogram} from './filter-generic-linear';
+import { validHistogram } from "./filter-generic-linear";
 import {
   UPDATE_FILTER,
   GET_DATA_ARRAY,
   GET_DATA_QUERY_RESULTS
-} from './filter-actions';
+} from "./filter-actions";
 
 import type {
   DataPoint,
@@ -16,48 +15,48 @@ import type {
   NumbersCreator,
   Action,
   HistogramCreator
-} from './filter-types';
+} from "./filter-types";
 
 // eslint-disable-next-line no-undef
 const WindowIntl: any = window.Intl || Intl;
 
-export const dateFormatter = new WindowIntl.DateTimeFormat('en-US', {
-  month: 'short',
-  year: 'numeric',
-  day: 'numeric'
+export const dateFormatter = new WindowIntl.DateTimeFormat("en-US", {
+  month: "short",
+  year: "numeric",
+  day: "numeric"
 });
 
-export const timeFormatter = new WindowIntl.DateTimeFormat('en-US', {
-  hour: 'numeric',
-  minute: 'numeric'
+export const timeFormatter = new WindowIntl.DateTimeFormat("en-US", {
+  hour: "numeric",
+  minute: "numeric"
 });
 
 export const readableTimeOperator = {
-  LESS_THAN: 'Before',
-  LESS_THAN_OR_EQUAL_TO: 'Before or on',
-  EQUAL_TO: 'On',
-  GREATER_THAN: 'After',
-  GREATER_THAN_OR_EQUAL_TO: 'After or on'
+  LESS_THAN: "Before",
+  LESS_THAN_OR_EQUAL_TO: "Before or on",
+  EQUAL_TO: "On",
+  GREATER_THAN: "After",
+  GREATER_THAN_OR_EQUAL_TO: "After or on"
 };
 
 export const defaultTimeProps = {
-  extent: {status: 'loaded', data: [0, 24 * 60]},
+  extent: { status: "loaded", data: [0, 24 * 60] },
   step: 1
 };
 
 // TODO remove after QL is passing back reliable data
 export function validDate(dataPoint: DataPoint): ?Date {
   if (
-    typeof dataPoint === 'string' &&
+    typeof dataPoint === "string" &&
     dataPoint.length === 10 &&
-    dataPoint.indexOf('-') === 4
+    dataPoint.indexOf("-") === 4
   ) {
     return new Date(`${dataPoint}T00:00:00`);
   }
   if (
     !dataPoint ||
-    typeof dataPoint === 'undefined' ||
-    typeof dataPoint === 'boolean' ||
+    typeof dataPoint === "undefined" ||
+    typeof dataPoint === "boolean" ||
     isNaN(new Date(dataPoint).getTime())
   ) {
     return undefined;
@@ -78,7 +77,7 @@ export function validTimeNumber(dataPoint: DataPoint): ?number {
 const validNumbers = validNum => (data: $ReadOnlyArray<DataPoint>) =>
   data.reduce((acc, point) => {
     const validPoint = validNum(point);
-    if (typeof validPoint === 'number') {
+    if (typeof validPoint === "number") {
       acc.push(validPoint);
     }
     return acc;
@@ -93,8 +92,8 @@ export const validTimeNumbers: NumbersCreator = memoize(
 
 export const validDateExtent: ExtentCreator = memoize(data => {
   const computedExtent = extent(validDateNumbers(data));
-  return (((typeof computedExtent[0] === 'number' &&
-  typeof computedExtent[1] === 'number'
+  return (((typeof computedExtent[0] === "number" &&
+  typeof computedExtent[1] === "number"
     ? computedExtent
     : [-Infinity, Infinity]): any): [number, number]);
 });
@@ -126,19 +125,19 @@ const updateFilterReducer = calculators => (_, __) => ({
   ...(calculators.extent
     ? {
         extent: {
-          status: 'loading'
+          status: "loading"
         }
       }
     : {}),
-  histogram: {status: 'loading'}
+  histogram: { status: "loading" }
 });
 
-const getDataArrayReducer = calculators => (_, {payload: {data}}) => {
+const getDataArrayReducer = calculators => (_, { payload: { data } }) => {
   return {
     ...(calculators.extent
       ? {
           minMax: {
-            status: 'loaded',
+            status: "loaded",
             data: [
               {
                 min: calculators.extent(data)[0],
@@ -148,21 +147,21 @@ const getDataArrayReducer = calculators => (_, {payload: {data}}) => {
           }
         }
       : {}),
-    histogram: {status: 'loaded', data: calculators.histogram(data)}
+    histogram: { status: "loaded", data: calculators.histogram(data) }
   };
 };
 
 const getDataQueryResultsReducer = calculators => (
   _,
-  {payload: {minMax, histogram}}
+  { payload: { minMax, histogram } }
 ) => ({
   ...(calculators.extent
     ? {
         extent:
-          minMax.status === 'loaded'
+          minMax.status === "loaded"
             ? {
                 // TODO set defaults when no data?
-                status: 'loaded',
+                status: "loaded",
                 data: [minMax.data[0].min, minMax.data[0].max]
               }
             : minMax

@@ -1,30 +1,29 @@
-// @flow
-import React from 'react';
-import {extent as d3Extent, histogram as d3Histogram} from 'd3-array';
-import {scaleLinear} from 'd3-scale';
-import memoize from 'memoize-one';
+import React from "react";
+import { extent as d3Extent, histogram as d3Histogram } from "d3-array";
+import { scaleLinear } from "d3-scale";
+import memoize from "memoize-one";
 
 import {
   sensibleStep,
   LockedInputs,
   HighlightedRangeInputs,
   combinedInputs
-} from '../inputs';
-import BrushableHistogram from './filter-brush-histogram';
+} from "../inputs";
+import BrushableHistogram from "./filter-brush-histogram";
 
-import type {Bin} from '../histogram';
-import type {FilterData} from './filter-types';
+import type { Bin } from "../histogram";
+import type { FilterData } from "./filter-types";
 
 export const VALUE_OPERATORS = {
-  LESS_THAN: 'LESS_THAN',
-  LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
-  EQUAL_TO: 'EQUAL_TO',
-  GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
-  GREATER_THAN: 'GREATER_THAN'
+  LESS_THAN: "LESS_THAN",
+  LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
+  EQUAL_TO: "EQUAL_TO",
+  GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
+  GREATER_THAN: "GREATER_THAN"
 };
 
 export const VALUES_OPERATORS = {
-  BETWEEN: 'BETWEEN'
+  BETWEEN: "BETWEEN"
 };
 
 export type FilterLinearRange = {|
@@ -51,19 +50,19 @@ export const highlightIndex = ({
   (operator === VALUES_OPERATORS.BETWEEN
     ? !(i % 2)
     : operator === VALUE_OPERATORS.EQUAL_TO
-      ? true
-      : Boolean(i % 2) ===
-        {
-          [VALUE_OPERATORS.LESS_THAN]: true,
-          [VALUE_OPERATORS.LESS_THAN_OR_EQUAL_TO]: true,
-          [VALUE_OPERATORS.EQUAL_TO]: false,
-          [VALUE_OPERATORS.GREATER_THAN_OR_EQUAL_TO]: false,
-          [VALUE_OPERATORS.GREATER_THAN]: false
-        }[operator]) === Boolean(not);
+    ? true
+    : Boolean(i % 2) ===
+      {
+        [VALUE_OPERATORS.LESS_THAN]: true,
+        [VALUE_OPERATORS.LESS_THAN_OR_EQUAL_TO]: true,
+        [VALUE_OPERATORS.EQUAL_TO]: false,
+        [VALUE_OPERATORS.GREATER_THAN_OR_EQUAL_TO]: false,
+        [VALUE_OPERATORS.GREATER_THAN]: false
+      }[operator]) === Boolean(not);
 
 export type FilterLinearProps = {|
   +not?: boolean,
-  +inputType: 'date' | 'time' | 'number',
+  +inputType: "date" | "time" | "number",
   +step?: number,
   ...FilterLinearUIProps
 |};
@@ -84,20 +83,20 @@ export function FilterEditorLinearRange({
   +onChange: (value: number[]) => void
 |}) {
   // TODO(bshope): improve error and loading states
-  if (extent && extent.status === 'loaded') {
+  if (extent && extent.status === "loaded") {
     const [min, max] = extent.data;
     return (
       <LockedInputs
         value={value}
         onChange={onChange}
-        render={({keyPrefix, onChange: childOnChange}) => {
+        render={({ keyPrefix, onChange: childOnChange }) => {
           const childProps = {
-            value: value.map(
-              v => (v === -Infinity ? min : v === Infinity ? max : v)
+            value: value.map(v =>
+              v === -Infinity ? min : v === Infinity ? max : v
             ),
             min,
             max,
-            highlightIndex: highlightIndex({operator, not}),
+            highlightIndex: highlightIndex({ operator, not }),
             onChange: childOnChange
           };
           return (

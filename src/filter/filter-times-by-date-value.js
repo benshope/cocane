@@ -1,5 +1,4 @@
-// @flow
-import {differenceInCalendarDays} from 'date-fns';
+import { differenceInCalendarDays } from "date-fns";
 
 import {
   dateFormatter,
@@ -7,21 +6,21 @@ import {
   validDate,
   filterDateReducers,
   readableTimeOperator
-} from './filter-times-common';
+} from "./filter-times-common";
 
 import type {
   FilterLinearSingle,
   FilterLinearUIProps
-} from './filter-generic-linear';
+} from "./filter-generic-linear";
 import {
   FilterEditorLinearSingle,
   VALUE_OPERATORS
-} from './filter-generic-linear';
-import {updateFilter} from './filter-actions';
+} from "./filter-generic-linear";
+import { updateFilter } from "./filter-actions";
 
-import type {FilterComponent} from './filter-types';
+import type { FilterComponent } from "./filter-types";
 
-const TYPE = 'DATE';
+const TYPE = "DATE";
 
 export type UIProps = {|
   ...FilterLinearUIProps,
@@ -33,10 +32,10 @@ export type FilterType = {|
   +timezone?: string
 |};
 
-const FilterText = ({filterType, operator, not, value}) => {
+const FilterText = ({ filterType, operator, not, value }) => {
   const validDateFromValue = validDate(value);
   if (!validDateFromValue) {
-    return 'Invalid value';
+    return "Invalid value";
   }
   const description = `${dateFormatter.format(validDateFromValue)}`;
   const op = readableTimeOperator[operator];
@@ -49,16 +48,16 @@ const FilterEditor = p => {
   const {
     extent,
     histogram,
-    filter: {value, operator}
+    filter: { value, operator }
   } = p;
   return FilterEditorLinearSingle({
     extent,
     histogram,
     value,
     onChange: v =>
-      p.dispatch(updateFilter(({...p.filter, operator, value: v}: any))),
+      p.dispatch(updateFilter(({ ...p.filter, operator, value: v }: any))),
     operator,
-    inputType: 'date'
+    inputType: "date"
   });
 };
 
@@ -77,10 +76,10 @@ const filterTimeByDay: {
 export default ({
   text: FilterText,
   editor: FilterEditor,
-  filterValue: ({value, operator}) => dataPoint => {
+  filterValue: ({ value, operator }) => dataPoint => {
     const datePoint = validDateNumber(dataPoint);
     return (
-      typeof datePoint === 'number' &&
+      typeof datePoint === "number" &&
       filterTimeByDay[operator](value, datePoint)
     );
   },

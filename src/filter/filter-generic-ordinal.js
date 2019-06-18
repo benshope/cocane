@@ -1,10 +1,9 @@
-// @flow
-import React from 'react';
-import styled from 'styled-components';
-import capitalize from 'lodash/fp/capitalize';
+import React from "react";
+import styled from "styled-components";
+import capitalize from "lodash/fp/capitalize";
 
-import Checkbox from '../checkbox';
-import {theme} from '../theme';
+import Checkbox from "../checkbox";
+import { theme } from "../theme";
 
 const MultiSelectOptionDiv = styled.div`
   line-height: 1.5rem;
@@ -14,12 +13,12 @@ const MultiSelectOptionDiv = styled.div`
     margin: 0;
     cursor: pointer;
   }
-  color: ${theme(['colors', 'mono800'])};
+  color: ${theme(["colors", "mono800"])};
   :hover {
-    color: ${theme(['colors', 'mono900'])};
+    color: ${theme(["colors", "mono900"])};
   }
   :active {
-    color: ${theme(['colors', 'mono1000'])};
+    color: ${theme(["colors", "mono1000"])};
   }
 `;
 
@@ -28,11 +27,11 @@ export const FilterOrdinalFactory = (options: string[]) => {
     onChange,
     filter
   }: {
-    onChange: (filter: {value: number[]}) => void,
-    filter: {value: number[]}
+    onChange: (filter: { value: number[] }) => void,
+    filter: { value: number[] }
   }) => {
     const valuesMap = (filter.value || []).reduce(
-      (acc, x) => ({...acc, [x]: true}),
+      (acc, x) => ({ ...acc, [x]: true }),
       {}
     );
     return (
@@ -43,7 +42,7 @@ export const FilterOrdinalFactory = (options: string[]) => {
               <Checkbox
                 checked={Boolean(valuesMap[x])}
                 onChange={() => {
-                  const newValuesMap = {...valuesMap, [x]: !valuesMap[x]};
+                  const newValuesMap = { ...valuesMap, [x]: !valuesMap[x] };
                   return onChange({
                     ...filter,
                     value: Object.keys(newValuesMap).filter(
@@ -52,7 +51,7 @@ export const FilterOrdinalFactory = (options: string[]) => {
                   });
                 }}
               />
-              <span style={{marginLeft: '0.5rem'}}>{capitalize(option)}</span>
+              <span style={{ marginLeft: "0.5rem" }}>{capitalize(option)}</span>
             </label>
           </MultiSelectOptionDiv>
         ))}

@@ -1,57 +1,56 @@
-// @flow
-import React from 'react';
-import groupBy from 'lodash/fp/groupBy';
-import flatten from 'lodash/fp/flatten';
-import capitalize from 'lodash/fp/capitalize';
+import React from "react";
+import groupBy from "lodash/fp/groupBy";
+import flatten from "lodash/fp/flatten";
+import capitalize from "lodash/fp/capitalize";
 
-import {FilterSelect, FilterInput} from './filter-styles';
-import {updateFilter} from './filter-actions';
+import { FilterSelect, FilterInput } from "./filter-styles";
+import { updateFilter } from "./filter-actions";
 
-import type {FilterComponents} from './filter-types';
+import type { FilterComponents } from "./filter-types";
 
 const TYPES = {
-  TOP_N: 'TOP_N',
-  BOTTOM_N: 'BOTTOM_N'
+  TOP_N: "TOP_N",
+  BOTTOM_N: "BOTTOM_N"
 };
 
 const readableTypes = {
-  TOP_N: 'top',
-  BOTTOM_N: 'bottom'
+  TOP_N: "top",
+  BOTTOM_N: "bottom"
 };
 
 const OPERATORS = {
-  NONE: 'NONE',
-  SUM: 'SUM',
-  COUNT: 'COUNT'
+  NONE: "NONE",
+  SUM: "SUM",
+  COUNT: "COUNT"
 };
 
 const readableOperators = {
-  NONE: 'by value',
-  SUM: 'by sum',
-  COUNT: 'by count'
+  NONE: "by value",
+  SUM: "by sum",
+  COUNT: "by count"
 };
 
 type BaseFilterType = {|
   +operator: $Keys<typeof OPERATORS>,
   +value: number
 |};
-type TopNType = {|...BaseFilterType, +filterType: typeof TYPES.TOP_N|};
-type BottomNType = {|...BaseFilterType, +filterType: typeof TYPES.BOTTOM_N|};
+type TopNType = {| ...BaseFilterType, +filterType: typeof TYPES.TOP_N |};
+type BottomNType = {| ...BaseFilterType, +filterType: typeof TYPES.BOTTOM_N |};
 export type FilterType = TopNType | BottomNType;
 export type UIProps =
-  | {|+filterType: typeof TYPES.TOP_N|}
-  | {|+filterType: typeof TYPES.BOTTOM_N|};
+  | {| +filterType: typeof TYPES.TOP_N |}
+  | {| +filterType: typeof TYPES.BOTTOM_N |};
 
-const FilterText = ({filterType, operator, bottom, not, value}) => {
+const FilterText = ({ filterType, operator, bottom, not, value }) => {
   const description = `The ${readableTypes[filterType]} ${value} grouped ${
     readableOperators[operator]
   }`;
   return not ? `Not ${description.toLowerCase()}` : description;
 };
 
-function FilterEditor({dispatch, filter}) {
+function FilterEditor({ dispatch, filter }) {
   return (
-    <div style={{display: 'flex', lineHeight: '2em'}}>
+    <div style={{ display: "flex", lineHeight: "2em" }}>
       <FilterSelect
         value={filter.filterType}
         onChange={e => {
@@ -107,8 +106,8 @@ function FilterEditor({dispatch, filter}) {
 type SortForOperator = {
   [key: $Keys<typeof OPERATORS>]: (
     field: string,
-    a: $ReadOnlyArray<{[field: string]: number}>,
-    b: $ReadOnlyArray<{[field: string]: number}>
+    a: $ReadOnlyArray<{ [field: string]: number }>,
+    b: $ReadOnlyArray<{ [field: string]: number }>
   ) => number
 };
 

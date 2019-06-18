@@ -1,19 +1,18 @@
-// @flow
-import {updateFilter} from './filter-actions';
+import { updateFilter } from "./filter-actions";
 import type {
   FilterLinearRange,
   FilterLinearUIProps
-} from './filter-generic-linear';
+} from "./filter-generic-linear";
 import {
   FilterEditorLinearRange,
   isNumberBetweenNumbers,
   VALUES_OPERATORS
-} from './filter-generic-linear';
-import {numberFormatter, filterNumberReducers} from './filter-numbers-common';
+} from "./filter-generic-linear";
+import { numberFormatter, filterNumberReducers } from "./filter-numbers-common";
 
-import type {FilterComponent} from './filter-types';
+import type { FilterComponent } from "./filter-types";
 
-const TYPE = 'NUMBER_RANGE';
+const TYPE = "NUMBER_RANGE";
 
 export type UIProps = {|
   ...FilterLinearUIProps,
@@ -24,7 +23,7 @@ export type FilterType = {|
   +filterType: typeof TYPE
 |};
 
-const FilterText = ({operator, not, value}) => {
+const FilterText = ({ operator, not, value }) => {
   const description = `Between ${
     value[0] === -Infinity ? value[0] : numberFormatter(value[0])
   } and ${value[1] === Infinity ? value[1] : numberFormatter(value[1])}`;
@@ -36,22 +35,22 @@ const FilterEditor = props => {
     dispatch,
     extent,
     histogram,
-    filter: {value}
+    filter: { value }
   } = props;
   return FilterEditorLinearRange({
     extent,
     histogram,
     value: [...value],
     operator: VALUES_OPERATORS.BETWEEN,
-    onChange: v => dispatch(updateFilter({...props.filter, value: v})),
-    inputType: 'number'
+    onChange: v => dispatch(updateFilter({ ...props.filter, value: v })),
+    inputType: "number"
   });
 };
 
 export default ({
   text: FilterText,
   editor: FilterEditor,
-  filterValue: ({value, operator}) => dataPoint =>
+  filterValue: ({ value, operator }) => dataPoint =>
     isNumberBetweenNumbers(
       [parseFloat(value[0]), parseFloat(value[1])],
       parseFloat(dataPoint)

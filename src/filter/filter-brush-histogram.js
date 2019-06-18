@@ -1,18 +1,16 @@
-// @flow
+import { AutoSizer } from "react-virtualized";
+import styled from "styled-components";
+import React from "react";
+import { max } from "d3-array";
+import { scaleLinear } from "d3-scale";
 
-import {AutoSizer} from 'react-virtualized';
-import styled from 'styled-components';
-import React from 'react';
-import {max} from 'd3-array';
-import {scaleLinear} from 'd3-scale';
-
-import Brush from '../brush';
-import {Bars} from '../histogram';
-import {HighlightsDiv, RangeInput} from '../inputs-styles';
-import {Highlights, RawCombinedRangeInputs} from '../inputs';
-import {theme} from '../theme';
-import type {Bin} from '../histogram';
-import type {FilterData, FilterDataLoaded} from './filter-types';
+import Brush from "../brush";
+import { Bars } from "../histogram";
+import { HighlightsDiv, RangeInput } from "../inputs-styles";
+import { Highlights, RawCombinedRangeInputs } from "../inputs";
+import { theme } from "../theme";
+import type { Bin } from "../histogram";
+import type { FilterData, FilterDataLoaded } from "./filter-types";
 
 type Props = $ReadOnly<{|
   value: number[],
@@ -53,7 +51,7 @@ const OverHistogramBrushDiv = styled.div`
     rx: 2;
     ry: 2;
     fill: rgba(0, 0, 0, 0);
-    stroke: ${theme(['colors', 'mono400'])};
+    stroke: ${theme(["colors", "mono400"])};
   }
 `;
 
@@ -61,15 +59,15 @@ const OverHistogramBrushOrRange = (props: PropsLoaded) => {
   return (
     <OverHistogramBrushDiv key="over-histogram-slider">
       {Array.isArray(props.value) && props.value.length > 1 ? (
-        <AutoSizer style={{width: '100%'}} disableHeight>
-          {({width}) => (
+        <AutoSizer style={{ width: "100%" }} disableHeight>
+          {({ width }) => (
             <Brush height={DEFAULT_HEIGHT} width={width} {...props} />
           )}
         </AutoSizer>
       ) : (
         <RawCombinedRangeInputs
           {...props}
-          overrides={{input: OverBarsRangeInput}}
+          overrides={{ input: OverBarsRangeInput }}
         />
       )}
     </OverHistogramBrushDiv>
@@ -80,8 +78,8 @@ const OverHistogramBrushOrRange = (props: PropsLoaded) => {
 class FilterHistogram extends React.PureComponent<PropsLoaded> {
   render() {
     return (
-      <AutoSizer style={{width: '100%'}} disableHeight>
-        {({width}) => {
+      <AutoSizer style={{ width: "100%" }} disableHeight>
+        {({ width }) => {
           const x = scaleLinear()
             .domain([this.props.min, this.props.max])
             .range([0, width])
@@ -98,7 +96,7 @@ class FilterHistogram extends React.PureComponent<PropsLoaded> {
                 x,
                 y,
                 bins: this.props.histogram.data,
-                overrides: {svg: BehindSliderSVG}
+                overrides: { svg: BehindSliderSVG }
               }}
             />
           );
@@ -124,12 +122,12 @@ const OverBarsHighlightsDiv = styled(HighlightsDiv)`
 `;
 
 // single highlight - not a styled component for performance reasons
-const OverBarsHighlightDiv = ({start, end, isHighlighted}) =>
+const OverBarsHighlightDiv = ({ start, end, isHighlighted }) =>
   isHighlighted ? null : (
     <div
       style={{
         left: `${start * 100}%`,
-        position: 'absolute',
+        position: "absolute",
         opacity: 0.75,
         background: `white`,
         width: `${(end - start) * 100}%`,
@@ -151,7 +149,7 @@ const OverHistogramHighlights = (props: PropsLoaded) => (
 
 const BrushableHistogram = (props: Props) => {
   // TODO add loading state here?
-  if (props.histogram.status === 'loaded') {
+  if (props.histogram.status === "loaded") {
     return (
       <HistogramAndSliderDiv key="histogram-and-brush">
         <FilterHistogram {...(props: any)} key="histogram" />

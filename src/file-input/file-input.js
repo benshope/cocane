@@ -8,7 +8,7 @@ const CellBoxDiv = styled.div`
 	font-family: "UberMove", "Helvetica Neue", Helvetica, sans-serif;
 	font-weight: 500;
 
-	.inputfile {
+	.file-input {
 		width: 0.1px;
 		height: 0.1px;
 		opacity: 0;
@@ -17,7 +17,7 @@ const CellBoxDiv = styled.div`
 		z-index: -1;
 	}
 
-	.inputfile + label {
+	.file-input + label {
 		font-size: 1.25rem;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -27,11 +27,11 @@ const CellBoxDiv = styled.div`
 		padding: 0.625rem 1.25rem;
 	}
 
-	.inputfile:focus label {
+	.file-input:focus label {
 		outline: 1px dotted #000;
 	}
 
-	.inputfile + label svg {
+	.file-input + label svg {
 		width: 1em;
 		height: 1em;
 		vertical-align: middle;
@@ -40,7 +40,7 @@ const CellBoxDiv = styled.div`
 		margin-right: 0.25em;
 	}
 
-	.inputfile-6 + label {
+	.file-input + label {
 		color: white;
 		display: flex;
 		border: 1px solid hsl(0, 0%, 40%);
@@ -48,18 +48,18 @@ const CellBoxDiv = styled.div`
 		padding: 0;
 	}
 
-	.inputfile-6:focus + label,
-	.inputfile-6.has-focus + label,
-	.inputfile-6 + label:hover {
+	.file-input:focus + label,
+	.file-input.has-focus + label,
+	.file-input + label:hover {
 		border-color: hsl(0, 0%, 10%);
 	}
 
-	.inputfile-6 + label .mock-input,
-	.inputfile-6 + label .mock-button {
+	.file-input + label .mock-input,
+	.file-input + label .mock-button {
 		padding: 0.625rem 1.25rem;
 	}
 
-	.inputfile-6 + label .mock-input {
+	.file-input + label .mock-input {
 		width: 200px;
 		flex: 1;
 		min-height: 1em;
@@ -70,7 +70,7 @@ const CellBoxDiv = styled.div`
 		vertical-align: top;
 	}
 
-	.inputfile-6 + label .mock-button {
+	.file-input + label .mock-button {
 		height: 100%;
 		flex-shrink: 0;
 		color: white;
@@ -78,9 +78,9 @@ const CellBoxDiv = styled.div`
 		display: inline-block;
 	}
 
-	.inputfile-6:focus + label .mock-button,
-	.inputfile-6.has-focus + label .mock-button,
-	.inputfile-6 + label:hover .mock-button {
+	.file-input:focus + label .mock-button,
+	.file-input.has-focus + label .mock-button,
+	.file-input + label:hover .mock-button {
 		background-color: hsl(0, 0%, 10%);
 	}
 `;
@@ -128,13 +128,13 @@ const FileInput = ({ id, addFile }) => {
 			<input
 				type="file"
 				name="file-7[]"
-				id="file-7"
+				id={`file-input-${id}`}
 				onChange={onChange}
-				class="inputfile inputfile-6"
+				className="file-input"
 				data-multiple-caption="{count} files selected"
 				multiple
 			/>
-			<label for="file-7">
+			<label htmlFor={`file-input-${id}`}>
 				<div className="mock-input" />
 				<div className="mock-button">
 					<svg
@@ -145,7 +145,7 @@ const FileInput = ({ id, addFile }) => {
 					>
 						<path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
 					</svg>
-					Choose a file&hellip;
+					{"Choose a file..."}
 				</div>
 			</label>
 		</CellBoxDiv>

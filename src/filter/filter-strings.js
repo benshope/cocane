@@ -1,4 +1,3 @@
-// @flow
 import {combineFilters} from './combine-filters';
 import filterStringsExact from './filter-strings-by-list';
 import filterStringsMatching from './filter-strings-by-matching';

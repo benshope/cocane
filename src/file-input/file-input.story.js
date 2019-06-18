@@ -1,12 +1,13 @@
-// @flow
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import { ConnectedFileInput, reducer } from "./file-input";
+import fileInput from "./file-input";
 import StoreViewer from "../store-viewer/store-viewer";
+
+const { component: ConnectedFileInput, reducer } = fileInput;
 
 const cellStore = createStore((state = {}, a) => {
 	action("action")(a);

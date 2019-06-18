@@ -1,4 +1,3 @@
-// @flow
 import {combineFilters} from './combine-filters';
 import filterTimeByTimeValueOrValues from './filter-times-combined-time-value-or-values';
 import filterTimeByDateValueOrValues from './filter-times-combined-date-value-or-values';

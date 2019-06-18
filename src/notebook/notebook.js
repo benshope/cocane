@@ -65,7 +65,7 @@ export const reducer = (s, a) =>
 		}
 	].reduce((acc, r) => r(acc, a), s);
 
-const componentList = [...fileInput, ...nativeInput, ...nativeSelect];
+const componentList = [fileInput, nativeInput, nativeSelect];
 const componentsByType = componentList.reduce((acc, component) => {
 	acc[component.type] = component;
 	return acc;
@@ -77,7 +77,6 @@ const Notebook = ({
 	// removeComponent,
 	state
 }) => {
-	console.log("state", state);
 	// TODO make searchable
 	// TODO create generic component - intersection of all
 	return (

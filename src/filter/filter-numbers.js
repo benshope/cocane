@@ -1,4 +1,3 @@
-// @flow
 import {combineFilters} from './combine-filters';
 import filterNumbersByValue from './filter-numbers-by-value';
 import filterNumbersByValues from './filter-numbers-by-values';
