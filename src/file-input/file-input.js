@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
+const TYPE = 'FILE_INPUT'
+
 const CellBoxDiv = styled.div`
 	font-family: 'UberMove', 'Helvetica Neue', Helvetica, sans-serif;
 	font-weight: 500;
@@ -83,15 +85,24 @@ const CellBoxDiv = styled.div`
 	}
 `
 
-export const LOAD_DATA_FROM_FILE = 'LOAD_DATA_FROM_FILE'
-export const loadDataAction = payload => ({
+const LOAD_DATA_FROM_FILE = 'LOAD_DATA_FROM_FILE'
+const addFileAction = payload => ({
 	type: LOAD_DATA_FROM_FILE,
 	payload,
 })
 
 export const reducer = (state, { type, payload }) => {
+	// if (type === ADD_COMPONENT && payload.type === COMPONENT_TYPE) {
+	// 	return { ...state, [payload.id]: payload }
+	// }
 	if (type === LOAD_DATA_FROM_FILE) {
-		return { ...state, [payload.id]: payload.data }
+		return {
+			...state,
+			[payload.id]: {
+				...state[payload.id],
+				data: payload.data,
+			},
+		}
 		// TODO: see if there is a reference to this ID
 		// and if there isn't - create a new viewer?
 		// or a temporary viewer?
@@ -100,11 +111,11 @@ export const reducer = (state, { type, payload }) => {
 	return state
 }
 
-function FileInput({ id, onFileInput }) {
+function FileInput({ id, addFile }) {
 	const onChange = e => {
 		const reader = new FileReader()
 		reader.onload = function(e) {
-			onFileInput({
+			addFile({
 				data: reader.result,
 				id,
 			})
@@ -141,7 +152,11 @@ function FileInput({ id, onFileInput }) {
 	)
 }
 
-export default connect(
+export const ConnectedFileInput = connect(
 	state => state,
-	{ onFileInput: loadDataAction }
+	{ addFile: addFileAction }
 )(FileInput)
+
+export const components = [
+	{ name: 'File Input', type: TYPE, component: ConnectedFileInput },
+]
