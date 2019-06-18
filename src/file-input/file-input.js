@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { csvParse } from "d3-dsv";
 
 const TYPE = "FILE_INPUT";
 
@@ -111,12 +112,24 @@ const reducer = (state, { type, payload }) => {
 	return state;
 };
 
+// let db;
+// let request = indexedDB.open("CellsDatabase");
+
+// request.onerror = function(event) {
+// 	console.log("error: ", e);
+// };
+
+// request.onsuccess = function(event) {
+// 	db = request.result;
+// 	console.log("success: " + db);
+// };
+
 const FileInput = ({ id, addFile }) => {
 	const onChange = e => {
 		const reader = new FileReader();
 		reader.onload = () => {
 			addFile({
-				data: reader.result,
+				data: csvParse(reader.result),
 				id
 			});
 		};

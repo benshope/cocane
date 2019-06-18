@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+
+import { SingleSelect } from "../select/select";
 import fileInput from "../file-input/file-input";
 import nativeInput from "../input/input";
 import nativeSelect from "../select/select";
@@ -94,16 +96,14 @@ const Notebook = ({
 				);
 			})}
 			<AddComponentDiv>
-				{componentList.map(component => (
-					<button
-						onClick={() =>
-							addComponent({ type: component.type, id })
-						}
-						key={component.type}
-					>
-						{component.name}
-					</button>
-				))}
+				<SingleSelect
+					onChange={option => addComponent({ type: option, id })}
+					value={undefined}
+					options={componentList.map(component => ({
+						value: component.type,
+						name: component.name
+					}))}
+				/>
 			</AddComponentDiv>
 		</NotebookDiv>
 	);

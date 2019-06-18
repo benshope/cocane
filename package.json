@@ -2,6 +2,8 @@
   "name": "cells",
   "version": "0.2.0",
   "dependencies": {
+    "@storybook/theming": "^5.1.8",
+    "d3-dsv": "^1.1.1",
     "d3-ease": "^1.0.5",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
@@ -44,6 +46,7 @@
     "@storybook/addon-a11y": "^5",
     "@storybook/addon-actions": "^5",
     "@storybook/addon-info": "^5",
+    "@storybook/addon-options": "^5.1.8",
     "@storybook/addon-storyshots": "^5",
     "@storybook/react": "^5",
     "@storybook/storybook-deployer": "^2.8.1"

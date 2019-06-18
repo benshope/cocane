@@ -7,6 +7,7 @@ function loadStories() {
 	require("../src/file-input/file-input.story");
 	require("../src/input/input.story");
 	require("../src/notebook/notebook.story");
+	require("../src/select/select.story");
 }
 
 configure(loadStories, module);

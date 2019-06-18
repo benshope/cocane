@@ -48,12 +48,12 @@ const Select = styled.select`
   }
 `;
 
-const SingleSelect = ({ value, onChange, options = [] }) => {
+export const SingleSelect = ({ options = [], onChange, ...props }) => {
   return (
-    <Select value={value} onChange={onChange}>
-      {options.map(({ key, value }) => (
-        <option key={key} value={value}>
-          {key}
+    <Select {...props} onChange={e => onChange(e.currentTarget.value)}>
+      {options.map(({ name, value }) => (
+        <option key={value} value={value}>
+          {name}
         </option>
       ))}
     </Select>
@@ -61,8 +61,10 @@ const SingleSelect = ({ value, onChange, options = [] }) => {
 };
 
 const ConnectedSelect = connect(
-  (state, props) => ({ ...state[props.id] }),
-  { onChange: setSelectValueAction }
+  (state, { id }) => ({ id, ...state[id] }),
+  (_, { id }) => ({
+    onChange: value => setSelectValueAction({ id, value })
+  })
 )(SingleSelect);
 
 export default {
