@@ -8,6 +8,7 @@ const TYPE = "FILE_INPUT";
 const CellBoxDiv = styled.div`
 	font-weight: 500;
 	line-height: 1.5em;
+	width: 300px;
 	.file-input {
 		width: 0.1px;
 		height: 0.1px;

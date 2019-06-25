@@ -24,12 +24,12 @@ const reducer = (state, { type, payload }) => {
 const Select = styled.select`
   color: black;
   display: block;
-  height: 1.5em;
-  line-height: 1.5em;
+  height: 1.5rem;
+  line-height: 1.5rem;
   position: relative;
-  padding-right: 1.5em;
+  padding-right: 1.5rem;
   padding-left: 0.75em;
-  border: none;
+  border: 1px solid black;
   box-sizing: border-box;
   margin: 0;
   border-radius: 1em;

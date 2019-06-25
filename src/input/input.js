@@ -2,6 +2,8 @@ import React from "react";
 // import styled from "styled-components";
 import { connect } from "react-redux";
 
+import { Input } from "./input.styles";
+
 const TYPE = "INPUT";
 
 const SET_INPUT_VALUE = "SET_INPUT_VALUE";
@@ -21,9 +23,9 @@ const reducer = (state, { type, payload }) => {
   return state;
 };
 
-const Input = ({ value, type = "number", onChange }) => {
+const Component = ({ value, type = "number", onChange }) => {
   return (
-    <input
+    <Input
       type={type}
       value={value}
       onChange={e => onChange(e.currentTarget.value)}
@@ -31,16 +33,16 @@ const Input = ({ value, type = "number", onChange }) => {
   );
 };
 
-const ConnectedInput = connect(
+const ConnectedComponent = connect(
   (state, { id }) => ({ id, ...state[id] }),
   (_, { id }) => ({
     onChange: value => setInputAction({ id, value })
   })
-)(Input);
+)(Component);
 
 export default {
   name: "Input",
   type: TYPE,
-  component: ConnectedInput,
+  component: ConnectedComponent,
   reducer
 };
