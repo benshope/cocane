@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { SingleSelect } from "../select/select";
 import fileInput from "../file-input/file-input";
+import stringListInput from "../string-list-input/string-list-input";
 import nativeInput from "../input/input";
 import nativeSelect from "../select/select";
 
@@ -18,6 +19,8 @@ const AddComponentDiv = styled.div`
 const CellWrapperDiv = styled.div`
 	position: relative;
 	margin-bottom: 0.5rem;
+	display: flex;
+	flex-direction: column;
 `;
 
 const ADD_COMPONENT = "ADD_COMPONENT";
@@ -37,12 +40,12 @@ export const reducer = (s, a) =>
 	[
 		fileInput.reducer,
 		nativeInput.reducer,
+		stringListInput.reducer,
 		nativeSelect.reducer,
 		(state, action) => {
 			const { type, payload } = action;
 			if (type === ADD_COMPONENT) {
 				const componentID = Math.random().toString(36);
-				console.log("trying to add component", payload);
 				return {
 					...state,
 					[componentID]: { type: payload.type },
@@ -67,7 +70,7 @@ export const reducer = (s, a) =>
 		}
 	].reduce((acc, r) => r(acc, a), s);
 
-const componentList = [fileInput, nativeInput, nativeSelect];
+const componentList = [fileInput, nativeInput, nativeSelect, stringListInput];
 const componentsByType = componentList.reduce((acc, component) => {
 	acc[component.type] = component;
 	return acc;
@@ -87,11 +90,15 @@ const Notebook = ({
 			{(state[id] ? state[id].components : []).map(componentID => {
 				console.log("componentID", componentID);
 				const componentState = state[componentID];
-				const Component =
-					componentsByType[componentState.type].component;
+				const cell = componentsByType[componentState.type];
+				const CellComponent = cell.component;
+				const CellInputs = cell.inputs
+					? cell.inputs
+					: () => `TODO: ${cell.type} inputs`;
 				return (
 					<CellWrapperDiv key={componentID}>
-						<Component id={componentID} />
+						<CellInputs id={componentID} />
+						<CellComponent id={componentID} />
 					</CellWrapperDiv>
 				);
 			})}

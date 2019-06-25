@@ -9,6 +9,11 @@ const setSelectValueAction = payload => ({
   type: SET_SELECT_VALUE,
   payload
 });
+const SET_SELECT_INPUT = "SET_SELECT_INPUT";
+const setSelectInputAction = payload => ({
+  type: SET_SELECT_INPUT,
+  payload
+});
 
 const reducer = (state, { type, payload }) => {
   if (type === SET_SELECT_VALUE) {
@@ -16,6 +21,13 @@ const reducer = (state, { type, payload }) => {
     return {
       ...state,
       [id]: { ...state[id], value }
+    };
+  }
+  if (type === SET_SELECT_INPUT) {
+    const { id, value } = payload;
+    return {
+      ...state,
+      [id]: { ...state[id], input: value }
     };
   }
   return state;
@@ -62,14 +74,53 @@ export const SingleSelect = ({ options = [], onChange, ...props }) => {
 };
 
 const ConnectedSelect = connect(
-  (state, { id }) => ({ id, ...state[id] }),
+  (state, { id }) => ({
+    id,
+    ...state[id],
+    options: state[id].input
+      ? state[state[id].input].value.map(x => ({ name: x, value: x }))
+      : []
+  }),
   (_, { id }) => ({
     onChange: value => setSelectValueAction({ id, value })
   })
 )(SingleSelect);
 
+// only allow selection of string-list or number-list
+const SelectTypes = (options, onChange) => (
+  <div>
+    {Object.keys(options).map(optionKey => (
+      <button
+        key={optionKey}
+        onClick={() => onChange(optionKey)}
+      >{`TODO: text description here.  TYPE: ${
+        options[optionKey].type
+      } ID: ${optionKey}`}</button>
+    ))}
+  </div>
+);
+
+const ConnectedArrayOutputSelector = connect(
+  (state, { id }) => ({
+    options: Object.keys(state).reduce((acc, key) => {
+      if (
+        key !== id &&
+        // TODO get as consts
+        ["STRING_LIST_INPUT", "NUMBER_LIST"].includes(state[key].type)
+      ) {
+        acc[key] = state[key];
+      }
+      return acc;
+    }, {})
+  }),
+  (_, { id }) => ({
+    onChange: value => setSelectInputAction({ id, value })
+  })
+)(SelectTypes);
+
 export default {
   name: "Select",
+  inputs: ConnectedArrayOutputSelector,
   type: TYPE,
   component: ConnectedSelect,
   reducer

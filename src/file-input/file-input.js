@@ -168,6 +168,7 @@ const ConnectedFileInput = connect(
 export default {
 	name: "File Input",
 	type: TYPE,
+	inputs: () => null,
 	component: ConnectedFileInput,
 	reducer
 };

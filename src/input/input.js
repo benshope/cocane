@@ -35,14 +35,15 @@ const Component = ({ value, type = "number", onChange }) => {
 
 const ConnectedComponent = connect(
   (state, { id }) => ({ id, ...state[id] }),
-  (_, { id }) => ({
-    onChange: value => setInputAction({ id, value })
+  (dispatch, { id }) => ({
+    onChange: value => dispatch(setInputAction({ id, value }))
   })
 )(Component);
 
 export default {
   name: "Input",
   type: TYPE,
+  inputs: () => null,
   component: ConnectedComponent,
   reducer
 };
