@@ -21,7 +21,7 @@ const reducer = (state, { type, payload }) => {
   return state;
 };
 
-const StringListComponent = ({ value, type = "text", onChange }) => {
+const StringListComponent = ({ value = [], type = "text", onChange }) => {
   console.log("XXX rendering stringlistinput", value, type, onChange);
   return (
     <div>

@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
+import stringListInput from "../string-list-input/string-list-input";
+
 const TYPE = "SELECT";
 
 const SET_SELECT_VALUE = "SET_SELECT_VALUE";
@@ -16,6 +18,7 @@ const setSelectInputAction = payload => ({
 });
 
 const reducer = (state, { type, payload }) => {
+  console.log("select reducer", type, payload);
   if (type === SET_SELECT_VALUE) {
     const { id, value } = payload;
     return {
@@ -81,40 +84,46 @@ const ConnectedSelect = connect(
       ? state[state[id].input].value.map(x => ({ name: x, value: x }))
       : []
   }),
-  (_, { id }) => ({
-    onChange: value => setSelectValueAction({ id, value })
+  (dispatch, { id }) => ({
+    onChange: value => dispatch(setSelectValueAction({ id, value }))
   })
 )(SingleSelect);
 
 // only allow selection of string-list or number-list
-const SelectTypes = (options, onChange) => (
-  <div>
-    {Object.keys(options).map(optionKey => (
-      <button
-        key={optionKey}
-        onClick={() => onChange(optionKey)}
-      >{`TODO: text description here.  TYPE: ${
-        options[optionKey].type
-      } ID: ${optionKey}`}</button>
-    ))}
-  </div>
-);
+const SelectTypes = ({ options = {}, onChange }) => {
+  return (
+    <div>
+      {Object.keys(options).length
+        ? Object.entries(options).map(([optionKey, optionData]) => (
+            <button
+              key={optionKey}
+              onClick={() => onChange(optionKey)}
+            >{`TODO: text description here.  TYPE: ${
+              optionData.type
+            } ID: ${optionKey}`}</button>
+          ))
+        : "No inputs"}
+    </div>
+  );
+};
 
 const ConnectedArrayOutputSelector = connect(
-  (state, { id }) => ({
-    options: Object.keys(state).reduce((acc, key) => {
-      if (
-        key !== id &&
-        // TODO get as consts
-        ["STRING_LIST_INPUT", "NUMBER_LIST"].includes(state[key].type)
-      ) {
-        acc[key] = state[key];
-      }
-      return acc;
-    }, {})
-  }),
-  (_, { id }) => ({
-    onChange: value => setSelectInputAction({ id, value })
+  (state, { id }) => {
+    return {
+      options: Object.entries(state).reduce((acc, [cellKey, cellData]) => {
+        if (
+          cellKey !== id &&
+          // TODO get as consts
+          [stringListInput.type, "NUMBER_LIST"].includes(cellData.type)
+        ) {
+          acc[cellKey] = cellData;
+        }
+        return acc;
+      }, {})
+    };
+  },
+  (dispatch, { id }) => ({
+    onChange: value => dispatch(setSelectInputAction({ id, value }))
   })
 )(SelectTypes);
 
