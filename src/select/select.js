@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import uniqBy from "lodash/fp/uniqBy";
 
-import stringListInput from "../string-list-input/string-list-input";
+import inputStringListCell from "../string-list-input/string-list-input";
+import inputNumberListCell from "../input-number-list/input-number-list";
 
 const TYPE = "SELECT";
 
@@ -117,7 +118,9 @@ const ConnectedArrayOutputSelector = connect(
         if (
           cellKey !== id &&
           // TODO get as consts
-          [stringListInput.type, "NUMBER_LIST"].includes(cellData.type)
+          [inputStringListCell.type, inputNumberListCell.type].includes(
+            cellData.type
+          )
         ) {
           acc[cellKey] = cellData;
         }

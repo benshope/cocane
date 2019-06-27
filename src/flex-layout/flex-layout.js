@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { SingleSelect } from "../select/select";
 import fileInput from "../file-input/file-input";
 import stringListInput from "../string-list-input/string-list-input";
+import inputNumberListCell from "../input-number-list/input-number-list";
 import nativeInput from "../input/input";
 import nativeSelect from "../select/select";
 
@@ -51,6 +52,7 @@ export const reducer = (s, a) =>
 		fileInput.reducer,
 		nativeInput.reducer,
 		stringListInput.reducer,
+		inputNumberListCell.reducer,
 		nativeSelect.reducer,
 		(state, action) => {
 			const { type, payload } = action;
@@ -80,7 +82,13 @@ export const reducer = (s, a) =>
 		}
 	].reduce((acc, r) => r(acc, a), s);
 
-const componentList = [fileInput, nativeInput, nativeSelect, stringListInput];
+const componentList = [
+	fileInput,
+	nativeInput,
+	nativeSelect,
+	stringListInput,
+	inputNumberListCell
+];
 const componentsByType = componentList.reduce((acc, component) => {
 	acc[component.type] = component;
 	return acc;

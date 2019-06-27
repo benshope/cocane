@@ -1,16 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const TYPE = "STRING_LIST_INPUT";
+const TYPE = "NUMBER_LIST_INPUT";
 
-const SET_STRING_LIST_INPUT_VALUE = "SET_STRING_LIST_INPUT_VALUE";
+const SET_NUMBER_LIST_INPUT_VALUE = "SET_NUMBER_LIST_INPUT_VALUE";
 const setInputAction = payload => ({
-  type: SET_STRING_LIST_INPUT_VALUE,
+  type: SET_NUMBER_LIST_INPUT_VALUE,
   payload
 });
 
 const reducer = (state, { type, payload }) => {
-  if (type === SET_STRING_LIST_INPUT_VALUE) {
+  if (type === SET_NUMBER_LIST_INPUT_VALUE) {
     const { id, value } = payload;
     return {
       ...state,
@@ -20,24 +20,31 @@ const reducer = (state, { type, payload }) => {
   return state;
 };
 
-const StringListComponent = ({ value = [], type = "text", onChange }) => {
+const NumberListComponent = ({ value = [], onChange }) => {
   return (
     <div>
       {value.map((v, i) => (
         <input
           key={i}
-          type={type}
+          type="number"
+          placeholder="Number input..."
           value={v}
-          placeholder="String input..."
+          step={1}
           autoFocus={i === value.length - 1}
           onChange={e => {
-            onChange(Object.assign([...value], { [i]: e.target.value }));
+            onChange(
+              Object.assign([...value], {
+                [i]: isNaN(e.currentTarget.value)
+                  ? e.currentTarget.value
+                  : parseFloat(e.currentTarget.value)
+              })
+            );
           }}
         />
       ))}
       <button
         onClick={() => {
-          onChange([...value, ""]);
+          onChange([...value, 0]);
         }}
       >
         {"Add Input"}
@@ -51,10 +58,10 @@ const ConnectedComponent = connect(
   (dispatch, { id }) => ({
     onChange: value => dispatch(setInputAction({ id, value }))
   })
-)(StringListComponent);
+)(NumberListComponent);
 
 export default {
-  name: "String List Input",
+  name: "Number List Input",
   type: TYPE,
   inputs: () => null,
   component: ConnectedComponent,
