@@ -30,6 +30,7 @@ const StringListComponent = ({ value = [], type = "text", onChange }) => {
           key={i}
           type={type}
           value={v}
+          autoFocus={i === value.length - 1}
           onChange={e => {
             console.log(
               "in onchange",

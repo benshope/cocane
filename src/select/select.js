@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import uniqBy from "lodash/fp/uniqBy";
 
 import stringListInput from "../string-list-input/string-list-input";
 
@@ -64,10 +65,11 @@ const Select = styled.select`
 `;
 
 export const SingleSelect = ({ options = [], onChange, ...props }) => {
+  const uniqueOptions = uniqBy("value")(options.filter(option => option.value));
   return (
     <Select {...props} onChange={e => onChange(e.currentTarget.value)}>
       {!props.value ? <option value="">Please choose an option</option> : null}
-      {options.map(({ name, value }) => (
+      {uniqueOptions.map(({ name, value }) => (
         <option key={value} value={value}>
           {name}
         </option>
@@ -80,9 +82,10 @@ const ConnectedSelect = connect(
   (state, { id }) => ({
     id,
     ...state[id],
-    options: state[id].input
-      ? state[state[id].input].value.map(x => ({ name: x, value: x }))
-      : []
+    options:
+      state[id].input && state[state[id].input].value
+        ? state[state[id].input].value.map(x => ({ name: x, value: x }))
+        : []
   }),
   (dispatch, { id }) => ({
     onChange: value => dispatch(setSelectValueAction({ id, value }))

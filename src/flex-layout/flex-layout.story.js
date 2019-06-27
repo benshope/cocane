@@ -4,24 +4,26 @@ import React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import { ConnectedNotebook, reducer } from "./notebook";
+import { ConnectedFlexLayout, reducer } from "./flex-layout";
 import StoreViewer from "../store-viewer/store-viewer";
 
 const cellStore = createStore(
-	(state = { notebook1: { type: "NOTEBOOK", components: [] } }, a) => {
+	(
+		state = { sampleFlexLayoutID: { type: "FLEX_LAYOUT", components: [] } },
+		a
+	) => {
 		action("action")(a);
 		return reducer(state, a);
 	}
 );
 
-const stories = storiesOf("Notebook", module);
+const stories = storiesOf("Flex Layout", module);
 
 // TODO illustrate reducers & async
 stories.add("component", () => {
 	return (
 		<Provider store={cellStore}>
-			<h2>{"Notebook"}</h2>
-			<ConnectedNotebook id="notebook1" />
+			<ConnectedFlexLayout id="sampleFlexLayoutID" />
 			<StoreViewer />
 		</Provider>
 	);

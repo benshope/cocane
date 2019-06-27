@@ -8,8 +8,13 @@ import stringListInput from "../string-list-input/string-list-input";
 import nativeInput from "../input/input";
 import nativeSelect from "../select/select";
 
-const NotebookDiv = styled.div`
+const FlexLayoutDiv = styled.div`
 	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	background: #f2f2f2;
+	padding-left: 1rem;
+	padding-top: 1rem;
 `;
 
 const AddComponentDiv = styled.div`
@@ -19,6 +24,11 @@ const AddComponentDiv = styled.div`
 const CellWrapperDiv = styled.div`
 	position: relative;
 	margin-bottom: 0.5rem;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 4px;
+	background: white;
+	padding: 1rem;
 	display: flex;
 	flex-direction: column;
 `;
@@ -76,7 +86,7 @@ const componentsByType = componentList.reduce((acc, component) => {
 	return acc;
 }, {});
 
-const Notebook = ({
+const FlexLayout = ({
 	id,
 	addComponent,
 	// removeComponent,
@@ -85,8 +95,8 @@ const Notebook = ({
 	// TODO make searchable
 	// TODO create generic component - intersection of all
 	return (
-		<NotebookDiv>
-			<input type="text" placeholder="Search..." />
+		<FlexLayoutDiv>
+			{/* <input type="text" placeholder="Search..." /> */}
 			{(state[id] ? state[id].components : []).map(componentID => {
 				console.log("componentID", componentID);
 				const componentState = state[componentID];
@@ -112,11 +122,11 @@ const Notebook = ({
 					}))}
 				/>
 			</AddComponentDiv>
-		</NotebookDiv>
+		</FlexLayoutDiv>
 	);
 };
 
-export const ConnectedNotebook = connect(
+export const ConnectedFlexLayout = connect(
 	state => ({ state }),
 	{ addComponent: addComponentAction, removeComponent: removeComponentAction }
-)(Notebook);
+)(FlexLayout);

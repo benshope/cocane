@@ -23,7 +23,7 @@ const reducer = (state, { type, payload }) => {
   return state;
 };
 
-const Component = ({ value, type = "number", onChange }) => {
+const Component = ({ value = "", type = "number", onChange }) => {
   return (
     <Input
       type={type}
