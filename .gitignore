@@ -2,3 +2,9 @@
 /node_modules
 /docs
 /dist
+/coverage
+/demo/dist
+/es
+/lib
+/umd
+npm-debug.log*

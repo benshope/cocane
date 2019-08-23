@@ -1,15 +1,15 @@
-import { configure, addDecorator } from "@storybook/react";
-import { withInfo } from "@storybook/addon-info";
+import {configure, addParameters, addDecorator} from '@storybook/react';
+import {withA11y} from '@storybook/addon-a11y';
+import {themes} from '@storybook/theming';
 
-addDecorator(withInfo({ inline: true }));
+addDecorator(withA11y);
+
+function requireAll(requireContext) {
+  return requireContext.keys().map(requireContext);
+}
 
 function loadStories() {
-	require("../src/file-input/file-input.story");
-	require("../src/input/input.story");
-	require("../src/string-list-input/string-list-input.story");
-	require("../src/input-number-list/input-number-list.story");
-	require("../src/flex-layout/flex-layout.story");
-	require("../src/select/select.story");
+  requireAll(require.context('../src', true, /\.story\.js?$/));
 }
 
 configure(loadStories, module);

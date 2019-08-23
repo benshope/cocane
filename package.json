@@ -1,54 +1,54 @@
 {
-  "name": "cells",
-  "version": "0.2.0",
-  "dependencies": {
-    "@storybook/theming": "^5.1.8",
-    "d3-dsv": "^1.1.1",
-    "d3-ease": "^1.0.5",
-    "lodash": "^4.17.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-markdown": "^4.0.8",
-    "react-move": "^5.2.1",
-    "react-redux": "^7.0.3",
-    "react-scripts": "3.0.1",
-    "react-virtualized": "^9.21.1",
-    "redux": "^4.0.1",
-    "redux-observable": "^1.1.0",
-    "rxjs": "^6.5.2",
-    "rxjs-compat": "^6.5.2",
-    "styled-components": "^4.2.1"
+  "name": "powder",
+  "version": "0.0.1",
+  "description": "Describe powder here",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "umd"
+  ],
+  "dependencies": {},
+  "peerDependencies": {
+    "d3-array": "^2",
+    "d3-dsv": "^1",
+    "d3-ease": "^1",
+    "d3-scale": "^3",
+    "firebase": "^6",
+    "history": "^4",
+    "lodash": "^4",
+    "prop-types": "^15",
+    "react": "^16",
+    "react-dom": "^16",
+    "react-redux": "^5",
+    "react-virtualized": "^9",
+    "redux": "^4",
+    "redux-observable": "^1",
+    "reselect": "^3",
+    "rxjs": "^6",
+    "rxjs-compat": "^6",
+    "styled-components": "^4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "nwb build-web-module",
+    "clean": "nwb clean-module",
+    "prepublishOnly": "npm run build",
+    "test": "nwb test",
+    "test:coverage": "nwb test --coverage",
+    "test:watch": "nwb test --server",
     "deploy": "build-storybook -o docs && storybook-to-ghpages",
-    "storybook": "start-storybook -p 9001",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "storybook": "start-storybook -p 9001"
   },
   "devDependencies": {
+    "nwb": "0.23.x",
     "@storybook/addon-a11y": "^5",
     "@storybook/addon-actions": "^5",
     "@storybook/addon-info": "^5",
-    "@storybook/addon-options": "^5.1.8",
+    "@storybook/addon-options": "^5",
     "@storybook/addon-storyshots": "^5",
     "@storybook/react": "^5",
-    "@storybook/storybook-deployer": "^2.8.1"
+    "@storybook/storybook-deployer": "^2",
+    "@storybook/theming": "^5"
   }
 }
