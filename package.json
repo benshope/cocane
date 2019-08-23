@@ -1,54 +1,118 @@
 {
-  "name": "powder",
-  "version": "0.0.1",
-  "description": "Describe powder here",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "files": [
-    "es",
-    "lib",
-    "umd"
-  ],
-  "dependencies": {},
-  "peerDependencies": {
-    "d3-array": "^2",
-    "d3-dsv": "^1",
-    "d3-ease": "^1",
-    "d3-scale": "^3",
-    "firebase": "^6",
-    "history": "^4",
-    "lodash": "^4",
-    "prop-types": "^15",
-    "react": "^16",
-    "react-dom": "^16",
-    "react-redux": "^5",
-    "react-virtualized": "^9",
-    "redux": "^4",
-    "redux-observable": "^1",
-    "reselect": "^3",
-    "rxjs": "^6",
-    "rxjs-compat": "^6",
-    "styled-components": "^4"
-  },
-  "scripts": {
-    "build": "nwb build-web-module",
-    "clean": "nwb clean-module",
-    "prepublishOnly": "npm run build",
-    "test": "nwb test",
-    "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server",
-    "deploy": "build-storybook -o docs && storybook-to-ghpages",
-    "storybook": "start-storybook -p 9001"
-  },
-  "devDependencies": {
-    "nwb": "0.23.x",
-    "@storybook/addon-a11y": "^5",
-    "@storybook/addon-actions": "^5",
-    "@storybook/addon-info": "^5",
-    "@storybook/addon-options": "^5",
-    "@storybook/addon-storyshots": "^5",
-    "@storybook/react": "^5",
-    "@storybook/storybook-deployer": "^2",
-    "@storybook/theming": "^5"
-  }
+    "name": "cocane",
+    "version": "0.0.1",
+    "description": "Composable visual components for handling data",
+    "main": "dist/index.js",
+    "files": [
+        "es",
+        "lib",
+        "umd"
+    ],
+    "dependencies": {
+        "d3-array": "^2",
+        "d3-dsv": "^1",
+        "d3-ease": "^1",
+        "d3-scale": "^3",
+        "lodash": "^4",
+        "prop-types": "^15",
+        "react": "^16",
+        "react-dom": "^16",
+        "react-redux": "^5",
+        "react-virtualized": "^9",
+        "redux": "^4",
+        "redux-observable": "^1",
+        "reselect": "^3",
+        "rxjs": "^6",
+        "rxjs-compat": "^6",
+        "styled-components": "^4"
+    },
+    "peerDependencies": {
+        "d3-array": "^2",
+        "d3-dsv": "^1",
+        "d3-ease": "^1",
+        "d3-scale": "^3",
+        "lodash": "^4",
+        "prop-types": "^15",
+        "react": "^16",
+        "react-dom": "^16",
+        "react-redux": "^5",
+        "react-virtualized": "^9",
+        "redux": "^4",
+        "redux-observable": "^1",
+        "reselect": "^3",
+        "rxjs": "^6",
+        "rxjs-compat": "^6",
+        "styled-components": "^4"
+    },
+    "scripts": {
+        "build": "./node_modules/.bin/webpack --mode=production",
+        "deploy": "storybook-to-ghpages",
+        "start": "npm run storybook",
+        "storybook": "start-storybook -p 9001"
+    },
+    "keywords": [
+        "react",
+        "ui",
+        "components"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
+        "@babel/preset-react": "^7",
+        "@storybook/addon-a11y": "^5",
+        "@storybook/addon-actions": "^5",
+        "@storybook/addon-info": "^5",
+        "@storybook/addon-options": "^5",
+        "@storybook/addon-storyshots": "^5",
+        "@storybook/react": "^5",
+        "@storybook/storybook-deployer": "^2",
+        "@storybook/theming": "^5",
+        "babel-cli": "^6",
+        "babel-loader": "^8.0.6",
+        "eslint": "^5",
+        "eslint-config-airbnb": "^17",
+        "eslint-plugin-import": "^2",
+        "eslint-plugin-jsx-a11y": "^6",
+        "eslint-plugin-react": "^7",
+        "prettier": "^1",
+        "react": "^16",
+        "react-dom": "^16",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.7",
+        "webpack-node-externals": "^1"
+    },
+    "esLintConfig": {
+        "env": {
+            "browser": true,
+            "commonjs": true,
+            "es6": true
+        },
+        "extends": "airbnb",
+        "globals": {
+            "Atomics": "readonly",
+            "SharedArrayBuffer": "readonly"
+        },
+        "parserOptions": {
+            "ecmaFeatures": {
+                "jsx": true
+            },
+            "ecmaVersion": 2018
+        },
+        "plugins": [
+            "react"
+        ],
+        "rules": {}
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+        ]
+    },
+    "prettier": {
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true
+    }
 }
