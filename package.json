@@ -1,5 +1,5 @@
 {
-    "name": "cocane",
+    "name": "unknowns",
     "version": "0.0.1",
     "description": "Composable visual components for handling data",
     "main": "dist/index.js",
@@ -15,33 +15,17 @@
         "d3-scale": "^3",
         "lodash": "^4",
         "prop-types": "^15",
-        "react": "^16",
-        "react-dom": "^16",
         "react-redux": "^5",
         "react-virtualized": "^9",
-        "redux": "^4",
         "redux-observable": "^1",
         "reselect": "^3",
         "rxjs": "^6",
-        "rxjs-compat": "^6",
-        "styled-components": "^4"
+        "rxjs-compat": "^6"
     },
     "peerDependencies": {
-        "d3-array": "^2",
-        "d3-dsv": "^1",
-        "d3-ease": "^1",
-        "d3-scale": "^3",
-        "lodash": "^4",
-        "prop-types": "^15",
         "react": "^16",
         "react-dom": "^16",
-        "react-redux": "^5",
-        "react-virtualized": "^9",
         "redux": "^4",
-        "redux-observable": "^1",
-        "reselect": "^3",
-        "rxjs": "^6",
-        "rxjs-compat": "^6",
         "styled-components": "^4"
     },
     "scripts": {
@@ -75,11 +59,13 @@
         "eslint-plugin-jsx-a11y": "^6",
         "eslint-plugin-react": "^7",
         "prettier": "^1",
-        "react": "^16",
-        "react-dom": "^16",
         "webpack": "^4.39.2",
         "webpack-cli": "^3.3.7",
-        "webpack-node-externals": "^1"
+        "webpack-node-externals": "^1",
+        "react": "^16",
+        "react-dom": "^16",
+        "redux": "^4",
+        "styled-components": "^4"
     },
     "esLintConfig": {
         "env": {
