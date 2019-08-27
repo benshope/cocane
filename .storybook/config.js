@@ -1,15 +1,15 @@
-import {configure, addParameters, addDecorator} from '@storybook/react';
-import {withA11y} from '@storybook/addon-a11y';
-import {themes} from '@storybook/theming';
+import { configure, addParameters, addDecorator } from '@storybook/react'
+import { withA11y } from '@storybook/addon-a11y'
+import { themes } from '@storybook/theming'
 
-addDecorator(withA11y);
+addDecorator(withA11y)
 
 function requireAll(requireContext) {
-  return requireContext.keys().map(requireContext);
+    return requireContext.keys().map(requireContext)
 }
 
 function loadStories() {
-  requireAll(require.context('../src', true, /\.story\.js?$/));
+    requireAll(require.context('../src', true, /\.story\.js?$/))
 }
 
-configure(loadStories, module);
+configure(loadStories, module)
