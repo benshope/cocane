@@ -1,6 +1,6 @@
 {
     "name": "supersuit",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Composable visual components for handling data",
     "main": "dist/index.js",
     "files": [
@@ -59,13 +59,13 @@
         "eslint-plugin-jsx-a11y": "^6",
         "eslint-plugin-react": "^7",
         "prettier": "^1",
-        "webpack": "^4.39.2",
-        "webpack-cli": "^3.3.7",
-        "webpack-node-externals": "^1",
         "react": "^16",
         "react-dom": "^16",
         "redux": "^4",
-        "styled-components": "^4"
+        "styled-components": "^4",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.7",
+        "webpack-node-externals": "^1"
     },
     "esLintConfig": {
         "env": {
@@ -97,7 +97,7 @@
     },
     "prettier": {
         "trailingComma": "es5",
-        "tabWidth": 4,
+        "tabWidth": 2,
         "semi": false,
         "singleQuote": true
     }
