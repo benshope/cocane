@@ -1,6 +1,6 @@
 {
     "name": "supersuit",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Composable visual components for handling data",
     "main": "dist/index.js",
     "files": [
