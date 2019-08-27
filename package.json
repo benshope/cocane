@@ -1,6 +1,6 @@
 {
   "name": "supersuit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Composable visual components for handling data",
   "main": "dist/index.js",
   "files": [
@@ -9,27 +9,24 @@
     "umd"
   ],
   "dependencies": {
+    "@babel/cli": "^7.5.5",
     "d3-array": "^2",
     "d3-dsv": "^1",
     "d3-ease": "^1",
     "d3-scale": "^3",
     "lodash": "^4",
     "prop-types": "^15",
-    "react-redux": "^5",
-    "react-virtualized": "^9",
-    "redux-observable": "^1",
-    "reselect": "^3",
-    "rxjs": "^6",
-    "rxjs-compat": "^6"
+    "react-virtualized": "^9"
   },
   "peerDependencies": {
     "react": "^16",
     "react-dom": "^16",
+    "react-redux": "^5",
     "redux": "^4",
     "styled-components": "^4"
   },
   "scripts": {
-    "build": "./node_modules/.bin/webpack --mode=production",
+    "build": "rm -fr dist && babel src --out-dir dist --source-maps inline",
     "deploy": "storybook-to-ghpages",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 9001"
@@ -40,8 +37,8 @@
     "components"
   ],
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/core": "^7",
+    "@babel/preset-env": "^7",
     "@babel/preset-react": "^7",
     "@storybook/addon-a11y": "^5",
     "@storybook/addon-actions": "^5",
@@ -51,8 +48,7 @@
     "@storybook/react": "^5",
     "@storybook/storybook-deployer": "^2",
     "@storybook/theming": "^5",
-    "babel-cli": "^6",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8",
     "eslint": "^5",
     "eslint-config-airbnb": "^17",
     "eslint-plugin-import": "^2",
@@ -61,6 +57,7 @@
     "prettier": "^1",
     "react": "^16",
     "react-dom": "^16",
+    "react-redux": "^5",
     "redux": "^4",
     "styled-components": "^4",
     "webpack": "^4.39.2",
