@@ -1,6 +1,6 @@
 {
   "name": "supersuit",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Composable visual components for handling data",
   "main": "dist/index.js",
   "files": [
@@ -9,7 +9,6 @@
     "umd"
   ],
   "dependencies": {
-    "@babel/cli": "^7.5.5",
     "d3-array": "^2",
     "d3-dsv": "^1",
     "d3-ease": "^1",
@@ -37,6 +36,7 @@
     "components"
   ],
   "devDependencies": {
+    "@babel/cli": "^7",
     "@babel/core": "^7",
     "@babel/preset-env": "^7",
     "@babel/preset-react": "^7",
@@ -59,10 +59,7 @@
     "react-dom": "^16",
     "react-redux": "^5",
     "redux": "^4",
-    "styled-components": "^4",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7",
-    "webpack-node-externals": "^1"
+    "styled-components": "^4"
   },
   "esLintConfig": {
     "env": {
