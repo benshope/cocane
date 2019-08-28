@@ -4,13 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/supersuit.svg)](https://www.npmjs.com/package/supersuit)
 [![npm downloads](https://img.shields.io/npm/dm/supersuit.svg)](https://www.npmjs.com/package/supersuit)
 
-SuperSuit is a combination of embeddable visual components for handling data. Each component performs a single operation such as:
-
-- load data
-- filter data
-- display a bar chart
-
-Components can be combined so that, for example, one component can limit the data shown on several othere components.
+SuperSuit is a combination of embeddable, composable visual components for handling data.
 
 ## Install
 
