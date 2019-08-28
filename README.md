@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/supersuit.svg)](https://www.npmjs.com/package/supersuit)
 [![npm downloads](https://img.shields.io/npm/dm/supersuit.svg)](https://www.npmjs.com/package/supersuit)
 
-SuperSuit is a combination of embeddable, composable, serializable visual components for handling data.
+SuperSuit is a combination of embeddable, composable, serializable React components for handling data.
 
 ## Install
 
