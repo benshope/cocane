@@ -1,4 +1,4 @@
-# SuperSuit
+# WIP SuperSuit
 
 ![gzip size](http://img.badgesize.io/https://unpkg.com/supersuit/dist/index.js?compression=gzip)
 [![npm version](https://img.shields.io/npm/v/supersuit.svg)](https://www.npmjs.com/package/supersuit)
