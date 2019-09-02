@@ -21,8 +21,7 @@
     "react": "^16",
     "react-dom": "^16",
     "react-redux": "^5",
-    "redux": "^4",
-    "styled-components": "^4"
+    "redux": "^4"
   },
   "scripts": {
     "build": "rm -fr dist && babel src --out-dir dist --source-maps inline",
@@ -59,7 +58,7 @@
     "react-dom": "^16",
     "react-redux": "^5",
     "redux": "^4",
-    "styled-components": "^4"
+    "styled-components": "^4.3.2"
   },
   "esLintConfig": {
     "env": {
