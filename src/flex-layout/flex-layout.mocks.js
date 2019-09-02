@@ -7,7 +7,10 @@ export default [
     state: {
       myCell: {
         type: 'FLEX_LAYOUT',
-        value: ['numbersCell', 'histogramCell'],
+        value: [
+          { id: 'numbersCell', gridColumnEnd: 'span 2' },
+          { id: 'histogramCell' },
+        ],
       },
       numbersCell: {
         type: inputNumberList.type,

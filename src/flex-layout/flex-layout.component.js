@@ -6,14 +6,15 @@ import { component as ButtonText } from '../button-text'
 import { component as CellTypePicker } from '../cell-picker'
 // import fileInput from "../file-input/file-input";
 import cell from '../cell'
+import { component as GridDiv } from '../grid'
 
-const FlexLayoutDiv = styled.div`
-  --em025: ${({ spacing }) => `${spacing * 0.25}em`};
-  --em05: ${({ spacing }) => `${spacing * 0.5}em`};
-  --em1: ${({ spacing }) => `${spacing}em`};
-  --em15: ${({ spacing }) => `${spacing * 1.5}em`};
-  --em20: ${({ spacing }) => `${spacing * 10}em`};
-  --scale: ${({ scale }) => scale};
+const FlexLayoutDiv = styled(GridDiv)`
+  --spacing_0_25: ${({ spacing }) => `${spacing * 0.25}em`};
+  --spacing_0_5: ${({ spacing }) => `${spacing * 0.5}em`};
+  --spacing_1: ${({ spacing }) => `${spacing}em`};
+  --spacing_1_5: ${({ spacing }) => `${spacing * 1.5}em`};
+  --spacing_2: ${({ spacing }) => `${spacing * 2}em`};
+  --scale: ${({ scale }) => scale * 16}px;
   --mono100: ${({ isDark }) => (isDark ? 'black' : 'white')};
   --mono200: ${({ isDark }) =>
     isDark ? 'hsl(0, 0%, 10%)' : 'hsl(0, 0%, 90%)'};
@@ -31,25 +32,25 @@ const FlexLayoutDiv = styled.div`
   background: var(--mono200, gray);
   transition: color 0.1s ease;
   color: var(--mono1000, black);
-  font-size: ${({ scale }) => scale}em;
-`
-
-const GridDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
-  padding-top: var(--em05, 0.5em);
-  padding-left: var(--em05, 0.5em);
-  > * {
+  font-size: var(--scale, 1em);
+  * {
+    box-sizing: border-box;
     transition: background 0.1s ease;
+  }
+  padding: var(--spacing_0_25, 0.25em);
+  grid-template-columns: ${({ scale }) => {
+    return `repeat(
+    auto-fill,
+    minmax(${scale * 20}rem, 1fr))`
+  }};
+  > * {
     background: var(--mono100, white);
-    margin-bottom: var(--em05, 0.5em);
-    margin-right: var(--em05, 0.5em);
-    border-radius: 4px;
-    overflow: hidden;
+    border-radius: var(--spacing_0_25, 0.25em);
   }
 `
 
 const CellDiv = styled.div`
+  grid-column-end: ${({ gridColumnEnd }) => gridColumnEnd || 'span 1'};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -57,10 +58,13 @@ const CellDiv = styled.div`
 
 const CellHeaderDiv = styled.div`
   display: flex;
-  height: 3em;
-  padding: 0 1em;
+  height: calc(2em + var(--spacing_1, 1em));
+  padding: 0 var(--spacing_1, 1em);
   justify-content: space-between;
   align-items: center;
+  button {
+    padding-right: 0;
+  }
 `
 
 const CellHeaderLeftDiv = styled.div`
@@ -79,10 +83,10 @@ const CellHeaderLeftDiv = styled.div`
 `
 
 const CellBodyDiv = styled.div`
-  padding: 1em;
   flex: 1;
   position: relative;
   display: flex;
+  padding: var(--spacing_1, 1em);
   > * {
     max-width: 100%;
   }
@@ -116,6 +120,7 @@ const FlexLayout = ({
   const [spacing, setSpacing] = React.useState(1)
   // TODO make searchable
   // TODO create generic cell - intersection of all
+  console.log('spacing is: ', spacing)
   return (
     <ThemeProvider theme={{ scale, isDark, spacing, hue }}>
       <div>
@@ -126,7 +131,7 @@ const FlexLayout = ({
               type="range"
               title="Scale"
               value={scale}
-              min={0.01}
+              min={0.1}
               max={1}
               step={0.01}
               onChange={e => setScale(e.currentTarget.value)}
@@ -170,7 +175,11 @@ const FlexLayout = ({
               min={0}
               max={4}
               step={0.01}
-              onChange={e => setSpacing(e.currentTarget.value)}
+              onChange={e => {
+                const newSpacing = e.currentTarget.value
+                console.log('setting to', newSpacing)
+                setSpacing(newSpacing)
+              }}
             />
           </label>
         </FlexLayoutHeaderDiv>
@@ -188,12 +197,12 @@ const FlexLayout = ({
           ) : null}
           {/* <input type="text" placeholder="Search..." /> */}
           {(value || [])
-            .filter(cellID => state[cellID])
-            .map(cellID => {
+            .filter(({ id }) => state[id])
+            .map(({ id: cellID, gridColumnEnd }) => {
               return (
                 // TODO cells should export
                 // their own string representation
-                <CellDiv key={cellID}>
+                <CellDiv key={cellID} gridColumnEnd={gridColumnEnd}>
                   <CellHeaderDiv>
                     <CellHeaderLeftDiv>
                       <span>{cellID}</span>

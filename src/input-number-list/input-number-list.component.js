@@ -10,6 +10,7 @@ import { component as Input } from '../input-number'
 // TODO just override column min size
 // also can that flex-basis go?
 const ContainerDiv = styled(GridDiv)`
+  margin: -0.5em;
   grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
   > * {
     flex: 1;
@@ -19,8 +20,7 @@ const ContainerDiv = styled(GridDiv)`
 
 const InputDiv = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
+  height: 2em;
   input {
     width: 100%;
     padding-right: 2.5em;

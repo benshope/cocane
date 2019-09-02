@@ -8,14 +8,16 @@ import select from '../select'
 import bigNumber from '../big-number'
 import histogram from '../histogram'
 
+import { component as GridDiv } from '../grid'
+
 // TODO make grid of these
 // TODO filter down to only top-level cell types
 const Cell = ({ onChange }) => (
-  <div>
+  <GridDiv>
     {[inputNumberList, inputNumber, select, bigNumber, histogram].map(cell => (
       <Button onClick={() => onChange(cell.type)}>{cell.name}</Button>
     ))}
-  </div>
+  </GridDiv>
 )
 
 export default Cell

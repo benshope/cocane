@@ -1,12 +1,12 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const Button = styled.button`
+  font-size: var(--scale, 1em);
   height: 2em;
-  padding: 0 1rem;
+  padding: 0 var(--spacing_1, 1em);
   line-height: 2em;
-  font-size: 1em;
-  border-radius: 1em;
+  border-radius: var(--spacing_1, 1em);
   border: none;
   outline: none;
   cursor: pointer;
@@ -25,8 +25,8 @@ const Button = styled.button`
     color: var(--mono100, white);
     cursor: auto;
   }
-`;
+`
 
-Button.propTypes = { onClick: PropTypes.function };
+Button.propTypes = { onClick: PropTypes.function }
 
-export default Button;
+export default Button

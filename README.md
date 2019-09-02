@@ -20,7 +20,13 @@ See the [examples](https://benshope.github.io/supersuit) for usage information a
 If there are any examples you'd like to see or use cases I didn't cover, please [file an issue](https://github.com/benshope/supersuit/issues/new).
 
 ## ToDo
+
 - generic component
 - other layouts
 - recursive component rendering
 - local/global key commands
+- date inputs
+- grid
+- chart type
+- grid resize
+- filter components

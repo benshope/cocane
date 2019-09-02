@@ -3,6 +3,8 @@ import cellReducer from '../cell.reducers'
 
 import { ADD_CELL, REMOVE_CELL, CHANGE_CELL_TYPE } from './flex-layout.actions'
 
+// TODO break out anything non-layout
+// this should just set width & order
 export default (s = {}, a) =>
   [
     cell.reducer,
@@ -13,10 +15,13 @@ export default (s = {}, a) =>
         const cellID = Math.random().toString(36)
         return {
           ...state,
+          // TODO this part should be handled on
+          // REQUEST_ADD_CELL
           [cellID]: { type: payload && payload.type },
+          // or this should be // ADD_CELL_SUCCESS
           [payload.id]: {
             ...state[payload.id],
-            value: [...(state[payload.id].value || []), cellID],
+            value: [...(state[payload.id].value || []), { id: cellID }],
           },
         }
       }
