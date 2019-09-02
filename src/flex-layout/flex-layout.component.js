@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components'
 
 import { component as Button } from '../button'
 import { component as ButtonText } from '../button-text'
+import { component as CellTypePicker } from '../cell-picker'
 // import fileInput from "../file-input/file-input";
 import cell from '../cell'
 
@@ -28,13 +29,16 @@ const FlexLayoutDiv = styled.div`
     isDark ? `hsl(${hue}, 50%, 80%)` : `hsl(${hue}, 50%, 30%)`};
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   background: var(--mono200, gray);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
   transition: color 0.1s ease;
   color: var(--mono1000, black);
+  font-size: ${({ scale }) => scale}em;
+`
+
+const GridDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
   padding-top: var(--em05, 0.5em);
   padding-left: var(--em05, 0.5em);
-  font-size: ${({ scale }) => scale}em;
   > * {
     transition: background 0.1s ease;
     background: var(--mono100, white);
@@ -57,13 +61,6 @@ const CellHeaderDiv = styled.div`
   padding: 0 1em;
   justify-content: space-between;
   align-items: center;
-`
-
-const AddCellDiv = styled.div`
-  padding: var(--em1, 0.5em);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const CellHeaderLeftDiv = styled.div`
@@ -113,6 +110,8 @@ const FlexLayout = ({
 }) => {
   const [scale, setScale] = React.useState(1)
   const [isDark, setIsDark] = React.useState(false)
+  // TODO make isEditing persisted state? or default on user?
+  const [isEditing, setIsEditing] = React.useState(true)
   const [hue, setHue] = React.useState(200)
   const [spacing, setSpacing] = React.useState(1)
   // TODO make searchable
@@ -140,6 +139,15 @@ const FlexLayout = ({
               type="checkbox"
               checked={isDark}
               onChange={e => setIsDark(e.currentTarget.checked)}
+            />
+          </label>
+          <label>
+            <div style={{ minWidth: '6em' }}>{`Is Editing ${isEditing}`}</div>
+            <input
+              title="Is Editing"
+              type="checkbox"
+              checked={isEditing}
+              onChange={e => setIsEditing(e.currentTarget.checked)}
             />
           </label>
           <label>
@@ -172,9 +180,12 @@ const FlexLayout = ({
           spacing={spacing}
           isDark={isDark}
         >
-          <AddCellDiv>
-            <Button onClick={() => addCell()}>{'+ Add Cell'}</Button>
-          </AddCellDiv>
+          {isEditing ? (
+            <CellDiv>
+              <CellHeaderDiv>{'Add Cell'}</CellHeaderDiv>
+              <CellTypePicker onChange={addCell} />
+            </CellDiv>
+          ) : null}
           {/* <input type="text" placeholder="Search..." /> */}
           {(value || [])
             .filter(cellID => state[cellID])
@@ -201,7 +212,7 @@ const FlexLayout = ({
                     </ButtonText>
                   </CellHeaderDiv>
                   <CellBodyDiv>
-                    <cell.container id={cellID} />
+                    <cell.container id={cellID} isEditing={isEditing} />
                   </CellBodyDiv>
                 </CellDiv>
               )

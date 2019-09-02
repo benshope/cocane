@@ -13,7 +13,7 @@ export default (s = {}, a) =>
         const cellID = Math.random().toString(36)
         return {
           ...state,
-          [cellID]: { type: (payload && payload.type) || inputNumber.type },
+          [cellID]: { type: payload && payload.type },
           [payload.id]: {
             ...state[payload.id],
             value: [...(state[payload.id].value || []), cellID],

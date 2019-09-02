@@ -1,23 +1,21 @@
-import PropTypes from "prop-types";
-import React from "react";
-import styled from "styled-components";
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled from 'styled-components'
 
-import { component as Button } from "../button";
-import { component as ButtonText } from "../button-text";
-import { component as Input } from "../input-number";
+import { component as Button } from '../button'
+import { component as ButtonText } from '../button-text'
+import { component as GridDiv } from '../grid'
+import { component as Input } from '../input-number'
 
-const ContainerDiv = styled.div`
-  display: grid;
+// TODO just override column min size
+// also can that flex-basis go?
+const ContainerDiv = styled(GridDiv)`
   grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
-  margin-left: var(--em05, 0.5em);
-  margin-top: var(--em05, 0.5em);
   > * {
-    margin-bottom: var(--em05, 0.5em);
-    margin-right: var(--em05, 0.5em);
     flex: 1;
     flex-basis: 40%;
   }
-`;
+`
 
 const InputDiv = styled.div`
   position: relative;
@@ -41,16 +39,16 @@ const InputDiv = styled.div`
   :focus-within button {
     opacity: 1;
   }
-`;
+`
 
 // TODO generalize to incrementable list
 // TODO get input component from the styled single input
 const InputNumberList = props => {
-  const values = props.value || [];
+  const values = props.value || []
   return (
     <ContainerDiv>
       <Button onClick={() => props.onChange([0, ...values])}>
-        {"+ Add Input"}
+        {'+ Add Input'}
       </Button>
       {values.map((v, i) => (
         <InputDiv key={i}>
@@ -58,21 +56,21 @@ const InputNumberList = props => {
             {...{
               autoFocus: i === values - 1,
               ...props,
-              ...(values && typeof values[i] === "number"
+              ...(values && typeof values[i] === 'number'
                 ? { value: values[i] }
                 : {}),
               ...(props.defaultValue &&
-              typeof props.defaultValue[i] === "number"
+              typeof props.defaultValue[i] === 'number'
                 ? { defaultValue: props.defaultValue[i] }
                 : {}),
               onChange: newValue => {
                 props.onChange(
                   Object.assign([...values], {
-                    [i]: newValue
+                    [i]: newValue,
                   })
-                );
+                )
               },
-              type: "number"
+              type: 'number',
             }}
           />
           <ButtonText
@@ -82,16 +80,16 @@ const InputNumberList = props => {
               props.onChange(values.filter((x, index) => index !== i))
             }
           >
-            {"×"}
+            {'×'}
           </ButtonText>
         </InputDiv>
       ))}
     </ContainerDiv>
-  );
-};
+  )
+}
 
 InputNumberList.propTypes = {
-  value: PropTypes.arrayOf(PropTypes.number)
-};
+  value: PropTypes.arrayOf(PropTypes.number),
+}
 
-export default InputNumberList;
+export default InputNumberList

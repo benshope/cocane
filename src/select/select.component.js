@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const StyledSelect = styled.select`
   transition: all linear 0.1s;
@@ -7,6 +7,7 @@ const StyledSelect = styled.select`
   display: block;
   height: 2em;
   font-size: 1em;
+  flex: 1;
   line-height: 2em;
   position: relative;
   padding-right: 1.5em;
@@ -14,6 +15,7 @@ const StyledSelect = styled.select`
   box-sizing: border-box;
   margin: 0;
   border-radius: 1em;
+  border: none;
   appearance: none;
   background-color: lightgray;
   background-repeat: no-repeat, repeat;
@@ -27,7 +29,7 @@ const StyledSelect = styled.select`
   option {
     font-weight: normal;
   }
-`;
+`
 
 const Select = ({ options = [], ...props }) => {
   return (
@@ -39,7 +41,7 @@ const Select = ({ options = [], ...props }) => {
         </option>
       ))}
     </StyledSelect>
-  );
-};
+  )
+}
 
-export default Select;
+export default Select
