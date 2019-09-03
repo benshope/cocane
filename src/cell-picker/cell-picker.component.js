@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import styled from 'styled-components'
 
 import { component as Button } from '../button'
 import inputNumberList from '../input-number-list'
@@ -8,16 +8,23 @@ import select from '../select'
 import bigNumber from '../big-number'
 import histogram from '../histogram'
 
-import { component as GridDiv } from '../grid'
+// TODO add negative margins right
+const PickerGridDiv = styled.div`
+  button {
+    display: inline-block;
+    margin-right: var(--spacing_0_5);
+    margin-bottom: var(--spacing_0_5);
+  }
+`
 
 // TODO make grid of these
 // TODO filter down to only top-level cell types
 const Cell = ({ onChange }) => (
-  <GridDiv>
+  <PickerGridDiv>
     {[inputNumberList, inputNumber, select, bigNumber, histogram].map(cell => (
       <Button onClick={() => onChange(cell.type)}>{cell.name}</Button>
     ))}
-  </GridDiv>
+  </PickerGridDiv>
 )
 
 export default Cell

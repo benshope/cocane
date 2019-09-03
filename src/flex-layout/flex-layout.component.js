@@ -14,6 +14,7 @@ const FlexLayoutDiv = styled(GridDiv)`
   --spacing_1: ${({ spacing }) => `${spacing}em`};
   --spacing_1_5: ${({ spacing }) => `${spacing * 1.5}em`};
   --spacing_2: ${({ spacing }) => `${spacing * 2}em`};
+  --spacing_2_5: ${({ spacing }) => `${spacing * 2.5}em`};
   --scale: ${({ scale }) => scale * 16}px;
   --mono100: ${({ isDark }) => (isDark ? 'black' : 'white')};
   --mono200: ${({ isDark }) =>
@@ -33,6 +34,8 @@ const FlexLayoutDiv = styled(GridDiv)`
   transition: color 0.1s ease;
   color: var(--mono1000, black);
   font-size: var(--scale, 1em);
+  padding: var(--spacing_0_25, 0.25em);
+
   * {
     box-sizing: border-box;
     transition: background 0.1s ease;
@@ -41,7 +44,7 @@ const FlexLayoutDiv = styled(GridDiv)`
   grid-template-columns: ${({ scale }) => {
     return `repeat(
     auto-fill,
-    minmax(${scale * 20}rem, 1fr))`
+    minmax(${scale * 20}rem, 2fr))`
   }};
   > * {
     background: var(--mono100, white);
@@ -84,7 +87,6 @@ const CellHeaderLeftDiv = styled.div`
 
 const CellBodyDiv = styled.div`
   flex: 1;
-  position: relative;
   display: flex;
   padding: var(--spacing_1, 1em);
   > * {
@@ -192,7 +194,9 @@ const FlexLayout = ({
           {isEditing ? (
             <CellDiv>
               <CellHeaderDiv>{'Add Cell'}</CellHeaderDiv>
-              <CellTypePicker onChange={addCell} />
+              <CellBodyDiv>
+                <CellTypePicker onChange={addCell} />
+              </CellBodyDiv>
             </CellDiv>
           ) : null}
           {/* <input type="text" placeholder="Search..." /> */}
