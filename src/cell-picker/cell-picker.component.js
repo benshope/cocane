@@ -11,6 +11,7 @@ import histogram from '../histogram'
 // TODO add negative margins right
 const PickerGridDiv = styled.div`
   button {
+    padding: 0 1em;
     display: inline-block;
     margin-right: var(--spacing_0_5);
     margin-bottom: var(--spacing_0_5);

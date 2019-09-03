@@ -89,6 +89,7 @@ const CellBodyDiv = styled.div`
   flex: 1;
   display: flex;
   padding: var(--spacing_1, 1em);
+  padding-top: 0;
   > * {
     max-width: 100%;
   }
