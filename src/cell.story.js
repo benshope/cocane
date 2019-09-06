@@ -11,6 +11,7 @@ import inputNumber from './input-number'
 import select from './select'
 import bigNumber from './big-number'
 import histogram from './histogram'
+import lineChart from './line-chart'
 import toggle from './toggle'
 import button from './button'
 import cellReducer from './cell.reducers'
@@ -67,6 +68,7 @@ const addStoryWithStore = stories => ({ name, state }) => cell => {
   select,
   bigNumber,
   histogram,
+  lineChart,
   toggle,
   flexLayout,
 ].forEach(cell => {

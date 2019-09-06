@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { extent, histogram, max } from 'd3-array'
 import { scaleLinear } from 'd3-scale'
-import { AutoSizer } from 'react-virtualized'
+import AutoSizer from 'react-virtualized-auto-sizer'
 
 const ThemedRect = styled.rect`
   transition: fill 0.1s ease;

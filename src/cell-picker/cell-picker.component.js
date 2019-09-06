@@ -7,6 +7,7 @@ import inputNumber from '../input-number'
 import select from '../select'
 import bigNumber from '../big-number'
 import histogram from '../histogram'
+import lineChart from '../line-chart'
 
 // TODO add negative margins right
 const PickerGridDiv = styled.div`
@@ -22,7 +23,14 @@ const PickerGridDiv = styled.div`
 // TODO filter down to only top-level cell types
 const Cell = ({ onChange }) => (
   <PickerGridDiv>
-    {[inputNumberList, inputNumber, select, bigNumber, histogram].map(cell => (
+    {[
+      inputNumberList,
+      inputNumber,
+      select,
+      bigNumber,
+      histogram,
+      lineChart,
+    ].map(cell => (
       <Button onClick={() => onChange(cell.type)}>{cell.name}</Button>
     ))}
   </PickerGridDiv>

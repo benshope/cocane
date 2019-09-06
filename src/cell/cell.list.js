@@ -5,6 +5,7 @@ import inputNumber from '../input-number'
 import select from '../select'
 import bigNumber from '../big-number'
 import histogram from '../histogram'
+import lineChart from '../line-chart'
 
 export const cellList = [
   inputNumberList,
@@ -12,6 +13,7 @@ export const cellList = [
   select,
   bigNumber,
   histogram,
+  lineChart,
 ]
 
 export const cellByType = cellList.reduce((acc, cell) => {

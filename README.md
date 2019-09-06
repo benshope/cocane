@@ -1,14 +1,15 @@
 # WIP SuperSuit
 
-![gzip size](http://img.badgesize.io/https://unpkg.com/supersuit/dist/index.js?compression=gzip)
-[![npm version](https://img.shields.io/npm/v/supersuit.svg)](https://www.npmjs.com/package/supersuit)
-[![npm downloads](https://img.shields.io/npm/dm/supersuit.svg)](https://www.npmjs.com/package/supersuit)
+[![GZIP Size](http://img.badgesize.io/https://unpkg.com/supersuit/dist/index.js?compression=gzip&style=for-the-badge)](https://unpkg.com/supersuit)
+[![NPM Registry](https://img.shields.io/npm/v/supersuit.svg?style=for-the-badge)](https://www.npmjs.com/package/supersuit)
+[![NPM License](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](LICENSE.md)
+[![NPM Downloads](https://img.shields.io/npm/dm/supersuit.svg?style=for-the-badge)](https://www.npmjs.com/package/supersuit)
 
 SuperSuit is a combination of embeddable, composable, serializable React components for handling and visualizing data.
 
 ## Install
 
-- **Npm:** `npm install supersuit`
+- **NPM:** `npm install supersuit`
 - **Yarn:** `yarn add supersuit`
 
 ## Options
@@ -30,3 +31,4 @@ If there are any examples you'd like to see or use cases I didn't cover, please 
 - chart type
 - grid resize
 - filter components
+- load external libraries on the fly?
