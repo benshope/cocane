@@ -1,6 +1,6 @@
 {
   "name": "supersuit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Composable visual components for handling data",
   "main": "dist",
   "files": [
