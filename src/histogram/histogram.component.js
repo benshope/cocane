@@ -10,29 +10,6 @@ const ThemedRect = styled.rect`
   fill: var(--primary600, hsl(200, 40%, 40%));
 `
 
-const Bars = ({ width, height, x, y, bins, overrides }) => {
-  const SVGComponent = (overrides && overrides.svg) || styled.svg``
-
-  return (
-    <SVGComponent width={width} height={height}>
-      {bins.map((d, i) => {
-        const xValue =
-          i + 1 === bins.length ? bins[bins.length - (i + 1)].x1 : d.x0
-        const xWidth = Math.max(0, x(d.x1) - x(d.x0) - 1)
-        return (
-          <ThemedRect
-            key={`bar-${i}`}
-            x={x(isNaN(xValue) || xValue === Infinity ? 0 : xValue)}
-            y={y(d.length)}
-            width={isNaN(xWidth) || xWidth === Infinity ? 0 : xWidth}
-            height={y(0) - y(d.length)}
-          />
-        )
-      })}
-    </SVGComponent>
-  )
-}
-
 // TODO: make a more interesting/abstracted empty state
 const EmptyDiv = styled.div`
   align-self: center;
@@ -65,7 +42,24 @@ const Histogram = props => {
     .nice()
     .range([height, 0])
 
-  return <Bars {...{ ...props, ...{ x, y, bins } }} />
+  return (
+    <svg width={width} height={height}>
+      {bins.map((d, i) => {
+        const xValue =
+          i + 1 === bins.length ? bins[bins.length - (i + 1)].x1 : d.x0
+        const xWidth = Math.max(0, x(d.x1) - x(d.x0) - 1)
+        return (
+          <ThemedRect
+            key={`bar-${i}`}
+            x={x(isNaN(xValue) || xValue === Infinity ? 0 : xValue)}
+            y={y(d.length)}
+            width={isNaN(xWidth) || xWidth === Infinity ? 0 : xWidth}
+            height={y(0) - y(d.length)}
+          />
+        )
+      })}
+    </svg>
+  )
 }
 
 const AutosizedHistogramDiv = styled.div`

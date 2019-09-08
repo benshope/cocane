@@ -1,82 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import d3Shape from 'd3-shape'
+import { line, curveMonotoneX } from 'd3-shape'
+import { scaleLinear } from 'd3-scale'
+import { extent } from 'd3-array'
 
-// import { DEFAULT_OPACITY } from 'theme'
-// import { ANIMATED_SERIES_PROPS } from 'utils/series-utils'
-
-// import AbstractSeries from './abstract-series'
-
+// are HOCs the right way to represent this?
+// they're an easy way to represent this
+// but might not be the *right* way
+// no need to rebuild CB
+// you could also use hook containers?
+// how do hooks fit with this?
+// should we create a stack?
 const LinePath = ({
-  curve,
-  marginLeft,
-  marginTop,
-  strokeDasharray,
-  strokeStyle,
-  strokeWidth,
-  style,
-  animation,
-  className,
-  data,
+  data = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 1, y: 1 }],
+  width = 200,
+  height = 100,
 }) => {
-  if (!data) {
-    return null
-  }
-  return null
-
-  // const x = this._getAttributeFunctor('x');
-  // const y = this._getAttributeFunctor('y');
-  // const stroke =
-  //   this._getAttributeValue('stroke') || this._getAttributeValue('color');
-  // const newOpacity = this._getAttributeValue('opacity');
-  // const opacity = Number.isFinite(newOpacity) ? newOpacity : DEFAULT_OPACITY;
-  // const getNull = this.props.nullAccessor || this.props.getNull;
-  //     let line = d3Shape.line();
-  // if (curve !== null) {
-  //   if (typeof curve === 'string' && d3Shape[curve]) {
-  //     line = line.curve(d3Shape[curve]);
-  //   } else if (typeof curve === 'function') {
-  //     line = line.curve(curve);
-  //   }
-  // }
-  // line = line.defined(getNull);
-  // line = line.x(x).y(y);
-  // const d = line(data);
-
-  // return (
-  //   <path
-  //     d={d}
-  //     transform={`translate(${marginLeft},${marginTop})`}
-  //     onMouseOver={this._seriesMouseOverHandler}
-  //     onMouseOut={this._seriesMouseOutHandler}
-  //     onClick={this._seriesClickHandler}
-  //     onContextMenu={this._seriesRightClickHandler}
-  //     style={{
-  //       opacity,
-  //       strokeWidth,
-  //       stroke,
-  //       ...style
-  //     }}
-  //   />
-  // );
-  // }
+  var xScale = scaleLinear()
+    .domain([0, data.length - 1])
+    .range([0, width])
+  var yScale = scaleLinear()
+    .domain(extent(data, point => point.x))
+    .range([0, height])
+  const d = line()
+    .x((d, i) => xScale(i))
+    .y(d => yScale(d.y))
+    .curve(curveMonotoneX)
+  return (
+    <svg>
+      <path d={d} stroke="orange" fill="orange" />
+    </svg>
+  )
 }
 
-LineSeries.propTypes = {
-  // ...AbstractSeries.propTypes,
-  // strokeStyle: PropTypes.oneOf(Object.keys(STROKE_STYLES)),
-  curve: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  getNull: PropTypes.func,
-}
+// LinePath.propTypes = {
+//   data: PropTypes.array,
+// }
 
-LineSeries.defaultProps = {
-  // ...AbstractSeries.defaultProps,
-  strokeStyle: 'solid',
-  style: {},
-  opacity: 1,
-  curve: null,
-  className: '',
-  getNull: () => true,
-}
-
-export default LineSeries
+export default LinePath
