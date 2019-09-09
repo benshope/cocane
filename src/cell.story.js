@@ -5,7 +5,7 @@ import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
 import styled from 'styled-components'
 
-import flexLayout from './flex-layout'
+import flexLayout from './grid-layout'
 import inputNumberList from './input-number-list'
 import inputNumber from './input-number'
 import select from './select'

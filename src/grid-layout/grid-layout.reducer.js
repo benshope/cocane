@@ -1,7 +1,7 @@
 import cell from '../cell'
 import cellReducer from '../cell.reducers'
 
-import { ADD_CELL, REMOVE_CELL, CHANGE_CELL_TYPE } from './flex-layout.actions'
+import { ADD_CELL, REMOVE_CELL, CHANGE_CELL_TYPE } from './grid-layout.actions'
 
 // TODO break out anything non-layout
 // this should just set width & order

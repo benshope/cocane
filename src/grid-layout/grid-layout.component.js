@@ -8,6 +8,44 @@ import { component as CellTypePicker } from '../cell-picker'
 import cell from '../cell'
 import { component as GridDiv } from '../grid'
 
+import {
+  sortableContainer,
+  sortableElement,
+  sortableHandle,
+} from 'react-sortable-hoc'
+
+const DragHandle = sortableHandle(() => <span>::</span>)
+const SortableContainer = sortableContainer(({ children }) => (
+  <div>{children}</div>
+))
+
+const SortableItem = sortableElement(
+  ({ cellID, gridColumnEnd, changeCellType, removeCell, isEditing }) => (
+    // TODO cells should export
+    // their own string representation
+    <CellDiv key={cellID} gridColumnEnd={gridColumnEnd}>
+      <CellHeaderDiv>
+        <CellHeaderLeftDiv>
+          <DragHandle />
+          <span>{cellID}</span>
+          <Button
+            title="Switch Cell Type"
+            onClick={() => changeCellType(cellID)}
+          >
+            {'𝞓'}
+          </Button>
+        </CellHeaderLeftDiv>
+        <ButtonText title="Delete Cell" onClick={() => removeCell(cellID)}>
+          {'×'}
+        </ButtonText>
+      </CellHeaderDiv>
+      <CellBodyDiv>
+        <cell.container id={cellID} isEditing={isEditing} />
+      </CellBodyDiv>
+    </CellDiv>
+  )
+)
+
 const FlexLayoutDiv = styled(GridDiv)`
   --spacing_0_25: ${({ spacing }) => `${spacing * 0.25}em`};
   --spacing_0_5: ${({ spacing }) => `${spacing * 0.5}em`};
@@ -35,7 +73,6 @@ const FlexLayoutDiv = styled(GridDiv)`
   color: var(--mono1000, black);
   font-size: var(--scale, 1em);
   padding: var(--spacing_0_25, 0.25em);
-
   * {
     box-sizing: border-box;
     transition: background 0.1s ease;
@@ -115,6 +152,7 @@ const FlexLayout = ({
   removeCell,
   state = {},
 }) => {
+  const [cellIDs, setCellIDs] = React.useState(value)
   const [scale, setScale] = React.useState(1)
   const [isDark, setIsDark] = React.useState(false)
   // TODO make isEditing persisted state? or default on user?
@@ -124,9 +162,17 @@ const FlexLayout = ({
   // TODO make searchable
   // TODO create generic cell - intersection of all
   console.log('spacing is: ', spacing)
+
   return (
     <ThemeProvider theme={{ scale, isDark, spacing, hue }}>
-      <div>
+      <SortableContainer
+        onSortEnd={items => {
+          console.log('onSortEnd', items)
+
+          setCellIDs(items)
+        }}
+        axis="xy"
+      >
         <FlexLayoutHeaderDiv>
           <label>
             <div>{`Scale ${scale}`}</div>
@@ -203,36 +249,21 @@ const FlexLayout = ({
           {/* <input type="text" placeholder="Search..." /> */}
           {(value || [])
             .filter(({ id }) => state[id])
-            .map(({ id: cellID, gridColumnEnd }) => {
-              return (
-                // TODO cells should export
-                // their own string representation
-                <CellDiv key={cellID} gridColumnEnd={gridColumnEnd}>
-                  <CellHeaderDiv>
-                    <CellHeaderLeftDiv>
-                      <span>{cellID}</span>
-                      <Button
-                        title="Switch Cell Type"
-                        onClick={() => changeCellType(cellID)}
-                      >
-                        {'𝞓'}
-                      </Button>
-                    </CellHeaderLeftDiv>
-                    <ButtonText
-                      title="Delete Cell"
-                      onClick={() => removeCell(cellID)}
-                    >
-                      {'×'}
-                    </ButtonText>
-                  </CellHeaderDiv>
-                  <CellBodyDiv>
-                    <cell.container id={cellID} isEditing={isEditing} />
-                  </CellBodyDiv>
-                </CellDiv>
-              )
-            })}
+            .map(({ id: cellID, gridColumnEnd }, i) => (
+              <SortableItem
+                {...{
+                  index: i,
+                  key: cellID,
+                  cellID,
+                  gridColumnEnd,
+                  changeCellType,
+                  removeCell,
+                  isEditing,
+                }}
+              />
+            ))}
         </FlexLayoutDiv>
-      </div>
+      </SortableContainer>
     </ThemeProvider>
   )
 }

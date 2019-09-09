@@ -1,37 +1,17 @@
-// Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import AbstractSeries from './abstract-series';
-import Animation from 'animation';
-import {ANIMATED_SERIES_PROPS} from 'utils/series-utils';
+import AbstractSeries from './abstract-series'
+import Animation from 'animation'
+import { ANIMATED_SERIES_PROPS } from 'utils/series-utils'
 
 const predefinedClassName =
-  'rv-xy-plot__series rv-xy-plot__series--custom-svg-wrapper';
+  'rv-xy-plot__series rv-xy-plot__series--custom-svg-wrapper'
 
 const DEFAULT_STYLE = {
   stroke: 'blue',
-  fill: 'blue'
-};
+  fill: 'blue',
+}
 
 function predefinedComponents(type, size = 2, style = DEFAULT_STYLE) {
   switch (type) {
@@ -42,22 +22,22 @@ function predefinedComponents(type, size = 2, style = DEFAULT_STYLE) {
           points={`0 0 ${size / 2} ${size / 2} 0 ${size} ${-size / 2} ${size /
             2} 0 0`}
         />
-      );
+      )
     case 'star':
       const starPoints = [...new Array(5)]
         .map((c, index) => {
-          const angle = index / 5 * Math.PI * 2;
-          const innerAngle = angle + Math.PI / 10;
-          const outerAngle = angle - Math.PI / 10;
+          const angle = (index / 5) * Math.PI * 2
+          const innerAngle = angle + Math.PI / 10
+          const outerAngle = angle - Math.PI / 10
           // ratio of inner polygon to outer polgyon
-          const innerRadius = size / 2.61;
+          const innerRadius = size / 2.61
           return `
         ${Math.cos(outerAngle) * size} ${Math.sin(outerAngle) * size}
         ${Math.cos(innerAngle) * innerRadius} ${Math.sin(innerAngle) *
             innerRadius}
-      `;
+      `
         })
-        .join(' ');
+        .join(' ')
       return (
         <polygon
           points={starPoints}
@@ -67,7 +47,7 @@ function predefinedComponents(type, size = 2, style = DEFAULT_STYLE) {
           width={size}
           style={style}
         />
-      );
+      )
     case 'square':
       return (
         <rect
@@ -77,10 +57,10 @@ function predefinedComponents(type, size = 2, style = DEFAULT_STYLE) {
           width={size}
           style={style}
         />
-      );
+      )
     default:
     case 'circle':
-      return <circle cx="0" cy="0" r={size / 2} style={style} />;
+      return <circle cx="0" cy="0" r={size / 2} style={style} />
   }
 }
 
@@ -90,23 +70,33 @@ function getInnerComponent({
   positionInPixels,
   positionFunctions,
   style,
-  propsSize
+  propsSize,
 }) {
-  const {size} = customComponent;
-  const aggStyle = {...style, ...(customComponent.style || {})};
-  const innerComponent = customComponent.customComponent;
+  const { size } = customComponent
+  const aggStyle = { ...style, ...(customComponent.style || {}) }
+  const innerComponent = customComponent.customComponent
   if (!innerComponent && typeof defaultType === 'string') {
-    return predefinedComponents(defaultType, size || propsSize, aggStyle);
+    return predefinedComponents(defaultType, size || propsSize, aggStyle)
   }
   // if default component is a function
   if (!innerComponent) {
-    return defaultType(customComponent, positionInPixels, aggStyle, positionFunctions);
+    return defaultType(
+      customComponent,
+      positionInPixels,
+      aggStyle,
+      positionFunctions
+    )
   }
   if (typeof innerComponent === 'string') {
-    return predefinedComponents(innerComponent || defaultType, size, aggStyle);
+    return predefinedComponents(innerComponent || defaultType, size, aggStyle)
   }
   // if inner component is a function
-  return innerComponent(customComponent, positionInPixels, aggStyle, positionFunctions);
+  return innerComponent(
+    customComponent,
+    positionInPixels,
+    aggStyle,
+    positionFunctions
+  )
 }
 
 class CustomSVGSeries extends AbstractSeries {
@@ -121,11 +111,11 @@ class CustomSVGSeries extends AbstractSeries {
       marginLeft,
       marginTop,
       style,
-      size
-    } = this.props;
+      size,
+    } = this.props
 
     if (!data || !innerWidth || !innerHeight) {
-      return null;
+      return null
     }
 
     if (animation) {
@@ -133,24 +123,24 @@ class CustomSVGSeries extends AbstractSeries {
         <Animation {...this.props} animatedProps={ANIMATED_SERIES_PROPS}>
           <CustomSVGSeries {...this.props} animation={false} />
         </Animation>
-      );
+      )
     }
 
-    const x = this._getAttributeFunctor('x');
-    const y = this._getAttributeFunctor('y');
+    const x = this._getAttributeFunctor('x')
+    const y = this._getAttributeFunctor('y')
     const contents = data.map((seriesComponent, index) => {
       const positionInPixels = {
         x: x(seriesComponent),
-        y: y(seriesComponent)
-      };
+        y: y(seriesComponent),
+      }
       const innerComponent = getInnerComponent({
         customComponent: seriesComponent,
         positionInPixels,
         defaultType: customComponent,
-        positionFunctions: {x, y},
+        positionFunctions: { x, y },
         style,
-        propsSize: size
-      });
+        propsSize: size,
+      })
       return (
         <g
           className="rv-xy-plot__series--custom-svg"
@@ -161,8 +151,8 @@ class CustomSVGSeries extends AbstractSeries {
         >
           {innerComponent}
         </g>
-      );
-    });
+      )
+    })
     return (
       <g
         className={`${predefinedClassName} ${className}`}
@@ -170,7 +160,7 @@ class CustomSVGSeries extends AbstractSeries {
       >
         {contents}
       </g>
-    );
+    )
   }
 }
 
@@ -181,7 +171,7 @@ CustomSVGSeries.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      y: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+      y: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     })
   ).isRequired,
   marginLeft: PropTypes.number,
@@ -189,15 +179,15 @@ CustomSVGSeries.propTypes = {
   style: PropTypes.object,
   size: PropTypes.number,
   onValueMouseOver: PropTypes.func,
-  onValueMouseOut: PropTypes.func
-};
+  onValueMouseOut: PropTypes.func,
+}
 
 CustomSVGSeries.defaultProps = {
   ...AbstractSeries.defaultProps,
   animation: false,
   customComponent: 'circle',
   style: {},
-  size: 2
-};
+  size: 2,
+}
 
-export default CustomSVGSeries;
+export default CustomSVGSeries

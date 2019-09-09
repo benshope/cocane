@@ -4,8 +4,8 @@ import {
   addCellAction,
   removeCellAction,
   changeCellTypeAction,
-} from './flex-layout.actions'
-import FlexLayout from './flex-layout.component'
+} from './grid-layout.actions'
+import FlexLayout from './grid-layout.component'
 
 export default connect(
   (state, { id }) => ({ ...(state[id] || {}), state }),

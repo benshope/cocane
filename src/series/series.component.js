@@ -1,19 +1,36 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { extent, histogram, max } from 'd3-array'
-import { scaleLinear } from 'd3-scale'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { scaleLinear, scaleBand } from 'd3-scale'
+import { extent, histogram, max } from 'd3-array'
 
-const Series = props => (
-  <AutoSizer>
-    {({ width, height }) => <svg>{children}</svg>
-  </AutoSizer>
-)
+import { component as SVG } from '../svg'
 
-Series.propTypes = {
-  xData: PropTypes.arrayOf(PropTypes.number),
-  yData: PropTypes.arrayOf(PropTypes.number),
+const Series = ({}) => {
+  const margin = {
+    TOP: 10,
+    BOTTOM: 20,
+    LEFT: 10,
+    RIGHT: 10,
+  }
+  return (
+    <SVG>
+      {({ width, height }) => {
+        return <React.Fragment></React.Fragment>
+      }}
+    </SVG>
+  )
 }
 
-export default Series
+Bars.propTypes = {
+  xKey: PropTypes.oneOfType([PropTypes.string, PropTypes.null]),
+  yKeys: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ),
+  data: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  ),
+}
+
+export default Bars
