@@ -9,11 +9,14 @@
     "umd"
   ],
   "dependencies": {
+    "@popmotion/popcorn": "^0.4.2",
+    "array-move": "^2.1.0",
     "d3-array": "^2",
     "d3-dsv": "^1",
     "d3-ease": "^1",
     "d3-scale": "^3",
     "d3-shape": "^1.3.5",
+    "framer-motion": "^1.6.7",
     "lodash": "^4",
     "prop-types": "^15",
     "react-sortable-hoc": "^1.10.1",
