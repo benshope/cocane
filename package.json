@@ -1,6 +1,6 @@
 {
-  "name": "supersuit",
-  "version": "0.0.8",
+  "name": "react-viz",
+  "version": "0.0.1",
   "description": "Composable visual components for handling data",
   "main": "dist",
   "files": [
