@@ -6,10 +6,11 @@ import { scaleLinear, scaleBand } from 'd3-scale'
 import { extent, histogram, max } from 'd3-array'
 
 import { component as SVG } from '../svg'
+import { primary } from '../theme'
 
 const ThemedRect = styled.rect`
   transition: fill 0.1s ease;
-  fill: var(--primary600, hsl(200, 40%, 40%));
+  fill: ${primary(50)};
 `
 
 const Bars = ({ data, xKey, yKeys }) => (

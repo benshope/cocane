@@ -12,10 +12,10 @@ import lineChart from '../line-chart'
 // TODO add negative margins right
 const PickerGridDiv = styled.div`
   button {
-    padding: 0 1em;
+    padding: 0 ${({ theme: { spacing } }) => spacing / 2 + 0.5}em;
     display: inline-block;
-    margin-right: var(--spacing_0_5);
-    margin-bottom: var(--spacing_0_5);
+    margin-right: ${({ theme: { spacing } }) => spacing}em;
+    margin-bottom: ${({ theme: { spacing } }) => spacing}em;
   }
 `
 

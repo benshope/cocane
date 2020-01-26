@@ -6,7 +6,6 @@ import { component as ButtonText } from '../button-text'
 import { component as CellTypePicker } from '../cell-picker'
 // import fileInput from "../file-input/file-input";
 import cell from '../cell'
-import { component as GridDiv } from '../grid'
 
 import {
   sortableContainer,
@@ -14,10 +13,31 @@ import {
   sortableHandle,
 } from 'react-sortable-hoc'
 
-const DragHandle = sortableHandle(() => <span>::</span>)
+const DragHandle = sortableHandle(() => <span className="handle">::</span>)
 const SortableContainer = sortableContainer(({ children }) => (
   <div>{children}</div>
 ))
+
+// --spacing_0_25: ${({ spacing }) => `${spacing * 0.25}em`};
+// --spacing_0_5: ${({ spacing }) => `${spacing * 0.5}em`};
+// --spacing_1: ${({ spacing }) => `${spacing}em`};
+// --spacing_1_5: ${({ spacing }) => `${spacing * 1.5}em`};
+// --spacing_2: ${({ spacing }) => `${spacing * 2}em`};
+// --spacing_2_5: ${({ spacing }) => `${spacing * 2.5}em`};
+// --scale: ${({ scale }) => scale * 16}px;
+// --mono100: ${({ isDark }) => (isDark ? 'black' : 'white')};
+// --mono200: ${({ isDark }) =>
+//   isDark ? 'hsl(0, 0%, 10%)' : 'hsl(0, 0%, 90%)'};
+// --mono300: ${({ isDark }) =>
+//   isDark ? 'hsl(0, 0%, 20%)' : 'hsl(0, 0%, 80%)'};
+// --mono1000: ${({ isDark }) => (isDark ? 'white' : 'black')};
+// --primary500: ${({ hue }) => `hsl(${hue}, 50%, 60%)`};
+// --primary600: ${({ hue, isDark }) =>
+//   isDark ? `hsl(${hue}, 50%, 60%)` : `hsl(${hue}, 50%, 50%)`};
+// --primary700: ${({ hue, isDark }) =>
+//   isDark ? `hsl(${hue}, 50%, 70%)` : `hsl(${hue}, 50%, 40%)`};
+// --primary800: ${({ hue, isDark }) =>
+//   isDark ? `hsl(${hue}, 50%, 80%)` : `hsl(${hue}, 50%, 30%)`};
 
 const SortableItem = sortableElement(
   ({ cellID, gridColumnEnd, changeCellType, removeCell, isEditing }) => (
@@ -46,60 +66,49 @@ const SortableItem = sortableElement(
   )
 )
 
-const FlexLayoutDiv = styled(GridDiv)`
-  --spacing_0_25: ${({ spacing }) => `${spacing * 0.25}em`};
-  --spacing_0_5: ${({ spacing }) => `${spacing * 0.5}em`};
-  --spacing_1: ${({ spacing }) => `${spacing}em`};
-  --spacing_1_5: ${({ spacing }) => `${spacing * 1.5}em`};
-  --spacing_2: ${({ spacing }) => `${spacing * 2}em`};
-  --spacing_2_5: ${({ spacing }) => `${spacing * 2.5}em`};
-  --scale: ${({ scale }) => scale * 16}px;
-  --mono100: ${({ isDark }) => (isDark ? 'black' : 'white')};
-  --mono200: ${({ isDark }) =>
-    isDark ? 'hsl(0, 0%, 10%)' : 'hsl(0, 0%, 90%)'};
-  --mono300: ${({ isDark }) =>
-    isDark ? 'hsl(0, 0%, 20%)' : 'hsl(0, 0%, 80%)'};
-  --mono1000: ${({ isDark }) => (isDark ? 'white' : 'black')};
-  --primary500: ${({ hue }) => `hsl(${hue}, 50%, 60%)`};
-  --primary600: ${({ hue, isDark }) =>
-    isDark ? `hsl(${hue}, 50%, 60%)` : `hsl(${hue}, 50%, 50%)`};
-  --primary700: ${({ hue, isDark }) =>
-    isDark ? `hsl(${hue}, 50%, 70%)` : `hsl(${hue}, 50%, 40%)`};
-  --primary800: ${({ hue, isDark }) =>
-    isDark ? `hsl(${hue}, 50%, 80%)` : `hsl(${hue}, 50%, 30%)`};
+const FlexLayoutDiv = styled.div`
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
-  background: var(--mono200, gray);
+  background: gray;
   transition: color 0.1s ease;
-  color: var(--mono1000, black);
-  font-size: var(--scale, 1em);
-  padding: var(--spacing_0_25, 0.25em);
+  color: black;
+  font-size: ${({ theme: { scale } }) => `${scale}em`};
+  padding: ${({ theme: { spacing } }) => spacing * 0.5}em;
+  display: grid;
+  grid-auto-rows: auto;
+  align-content: start;
   * {
     box-sizing: border-box;
     transition: background 0.1s ease;
   }
-  padding: var(--spacing_0_25, 0.25em);
-  grid-template-columns: ${({ scale }) => {
+  grid-template-columns: ${({ theme: { scale } }) => {
     return `repeat(
     auto-fill,
     minmax(${scale * 20}rem, 2fr))`
   }};
-  > * {
-    background: var(--mono100, white);
-    border-radius: var(--spacing_0_25, 0.25em);
-  }
+  grid-gap: ${({ theme: { spacing } }) => spacing * 0.5}em;
 `
 
 const CellDiv = styled.div`
+  font-size: ${({ theme: { scale } }) => `${scale}em`};
+  background: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
+  border-radius: ${({ theme: { spacing } }) => `${spacing * 0.25}em`};
   grid-column-end: ${({ gridColumnEnd }) => gridColumnEnd || 'span 1'};
   position: relative;
   display: flex;
   flex-direction: column;
+  .handle {
+    cursor: grab;
+  }
+  &.sorting {
+    box-shadow: 0.2em 0.2em 0.4em
+      ${({ theme: { isDark } }) => (isDark ? 'white' : 'black')};
+  }
 `
 
 const CellHeaderDiv = styled.div`
   display: flex;
-  height: calc(2em + var(--spacing_1, 1em));
-  padding: 0 var(--spacing_1, 1em);
+  height: calc(2em + ${({ theme: { spacing } }) => `${spacing}em`});
+  padding: 0 ${({ theme: { spacing } }) => `${spacing}em`};
   justify-content: space-between;
   align-items: center;
   button {
@@ -125,7 +134,7 @@ const CellHeaderLeftDiv = styled.div`
 const CellBodyDiv = styled.div`
   flex: 1;
   display: flex;
-  padding: var(--spacing_1, 1em);
+  padding: ${({ theme: { spacing } }) => `${spacing}em`};
   padding-top: 0;
   > * {
     max-width: 100%;
@@ -162,10 +171,13 @@ const FlexLayout = ({
   // TODO make searchable
   // TODO create generic cell - intersection of all
   console.log('spacing is: ', spacing)
+  const theme = { scale, isDark, spacing, hue }
 
   return (
-    <ThemeProvider theme={{ scale, isDark, spacing, hue }}>
+    <ThemeProvider theme={theme}>
       <SortableContainer
+        helperClass="sorting"
+        useDragHandle={true}
         onSortEnd={items => {
           console.log('onSortEnd', items)
 
@@ -232,12 +244,7 @@ const FlexLayout = ({
             />
           </label>
         </FlexLayoutHeaderDiv>
-        <FlexLayoutDiv
-          scale={scale}
-          hue={hue}
-          spacing={spacing}
-          isDark={isDark}
-        >
+        <FlexLayoutDiv>
           {isEditing ? (
             <CellDiv>
               <CellHeaderDiv>{'Add Cell'}</CellHeaderDiv>

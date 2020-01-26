@@ -12,7 +12,7 @@ const Button = styled.button`
   cursor: pointer;
   transition: background 0.1s ease;
   background: var(--primary600, hsl(200, 30%, 40%));
-  color: var(--mono100, white);
+  color: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
   :hover,
   :focus {
     background: var(--primary700, hsl(200, 30%, 30%));
@@ -22,7 +22,7 @@ const Button = styled.button`
   }
   :disabled {
     background: var(--primary700, hsl(200, 10%, 40%));
-    color: var(--mono100, white);
+    color: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
     cursor: auto;
   }
 `

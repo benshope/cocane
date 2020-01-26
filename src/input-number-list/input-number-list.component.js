@@ -21,7 +21,7 @@ const InputDiv = styled.div`
   position: relative;
   height: 2em;
   input {
-    font-size: --size;
+    font-size: ${({ theme: { size } }) => size}em;
     width: 100%;
     padding-right: 2em;
   }

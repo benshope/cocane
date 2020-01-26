@@ -12,9 +12,10 @@ const Input = styled.input`
   flex: 1;
   line-height: 2em;
   padding: 0 1em;
-  border-radius: var(--spacing_1, 1em);
-  color: var(--mono1000, black);
-  border: 2px solid var(--mono200, hsl(200, 5%, 80%));
+  border-radius: ${({ theme: { spacing } }) => spacing}em;
+  color: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
+  border: 2px solid
+    hsl(0, 0%, ${({ theme: { isDark } }) => (isDark ? 20 : 80)}%);
   background: var(--mono100, hsl(200, 5%, 100%));
   transition: background 0.1s ease;
   transition: border-color 0.1s ease;
