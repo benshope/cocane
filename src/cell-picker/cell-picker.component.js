@@ -31,7 +31,9 @@ const Cell = ({ onChange }) => (
       histogram,
       lineChart,
     ].map(cell => (
-      <Button onClick={() => onChange(cell.type)}>{cell.name}</Button>
+      <Button key={cell.type} onClick={() => onChange(cell.type)}>
+        {cell.name}
+      </Button>
     ))}
   </PickerGridDiv>
 )

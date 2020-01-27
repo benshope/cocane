@@ -12,7 +12,6 @@ import {
 // TODO break out anything non-layout
 // this should just set width & order
 export default (s = {}, a) => {
-  console.log(s, a)
   return [
     cell.reducer,
     cellReducer,
@@ -34,10 +33,10 @@ export default (s = {}, a) => {
       }
       if (type === CHANGE_CELL_TYPE) {
         // TODO should refer to sub-reducers here
-        const nextCellType = cellList.reduce(
+        const nextCellType = cell.cellList.reduce(
           (acc, cell, i) => ({
             ...acc,
-            [cell.type]: cellList[cellList.length % (i + 1)].type,
+            [cell.type]: cell.cellList[cell.cellList.length % (i + 1)].type,
           }),
           {}
         )

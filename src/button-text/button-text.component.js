@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -27,6 +28,11 @@ const Button = styled.button`
   }
 `
 
-Button.propTypes = { onClick: PropTypes.function }
+const ButtonComponent = props => <Button {...props} />
 
-export default Button
+ButtonComponent.propTypes = {
+  title: PropTypes.string,
+  onClick: PropTypes.func,
+}
+
+export default ButtonComponent

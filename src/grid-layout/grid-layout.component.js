@@ -1,6 +1,5 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
-import arrayMove from 'array-move'
 
 import { component as Button } from '../button'
 import { component as ButtonText } from '../button-text'

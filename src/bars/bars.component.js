@@ -13,34 +13,37 @@ const ThemedRect = styled.rect`
   fill: ${primary(50)};
 `
 
-const Bars = ({ data, xKey, yKeys }) => (
-  <SVG>
-    {({ width, height }) => {
-      const x = scaleBand()
-        .range([0, width])
-        .round(true)
-        .padding(0.1)
-        .domain(data.map(d => (xKey ? d[xKey] : d)))
-      const y = scaleLinear()
-        .range([height, 0])
-        .domain([0, max(data, d => d[yKeys[0]])])
-      return data.map((d, i) => {
-        return (
-          <ThemedRect
-            key={`bar-${i}`}
-            x={x(d[xKey])}
-            y={y(d[yKeys[0]])}
-            width={x.bandwidth()}
-            height={height - y(d[yKeys[0]])}
-          />
-        )
-      })
-    }}
-  </SVG>
-)
+const Bars = ({ data, xKey, yKeys }) => {
+  console.log(data, xKey, yKeys)
 
+  return (
+    <SVG>
+      {({ width, height }) => {
+        const x = scaleBand()
+          .range([0, width])
+          .round(true)
+          .padding(0.1)
+          .domain(data.map(d => (xKey ? d[xKey] : d)))
+        const y = scaleLinear()
+          .range([height, 0])
+          .domain([0, max(data, d => d[yKeys[0]])])
+        return data.map((d, i) => {
+          return (
+            <ThemedRect
+              key={`bar-${i}`}
+              x={x(d[xKey])}
+              y={y(d[yKeys[0]])}
+              width={x.bandwidth()}
+              height={height - y(d[yKeys[0]])}
+            />
+          )
+        })
+      }}
+    </SVG>
+  )
+}
 Bars.propTypes = {
-  xKey: PropTypes.oneOfType([PropTypes.string, PropTypes.null]),
+  xKey: PropTypes.oneOfType([PropTypes.string]),
   yKeys: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
