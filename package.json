@@ -9,6 +9,7 @@
     "umd"
   ],
   "dependencies": {
+    "array-move": "^2.2.1",
     "d3-array": "^2",
     "d3-dsv": "^1",
     "d3-ease": "^1",

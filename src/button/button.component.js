@@ -1,28 +1,31 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import { mono, primary } from '../theme'
+
 const Button = styled.button`
-  font-size: var(--scale, 1em);
-  height: 2em;
-  padding: 0 var(--spacing_1, 1em);
-  line-height: 2em;
-  border-radius: var(--spacing_1, 1em);
+  padding: 0 ${({ theme: { spacing } }) => spacing}em;
+  border-radius: ${({ theme: { spacing } }) => 1 + spacing}em;
+  line-height: ${({ theme: { spacing } }) => 1 + spacing}em;
   border: none;
   outline: none;
   cursor: pointer;
   transition: background 0.1s ease;
-  background: var(--primary600, hsl(200, 30%, 40%));
-  color: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: ${primary(60)};
+  color: white;
   :hover,
   :focus {
-    background: var(--primary700, hsl(200, 30%, 30%));
+    background: ${primary(70)};
   }
   :active {
-    background: var(--primary800, hsl(200, 30%, 20%));
+    background: ${primary(80)};
   }
   :disabled {
-    background: var(--primary700, hsl(200, 10%, 40%));
-    color: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
+    background: ${primary(70)};
+    color: ${mono(0)};
     cursor: auto;
   }
 `

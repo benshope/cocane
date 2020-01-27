@@ -2,27 +2,26 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 
+import { mono } from '../theme'
+
 const Input = styled.input`
-  &,
+  box-sizing: border-box;
   * {
     box-sizing: border-box;
   }
-  height: 2em;
-  font-size: 1em;
   flex: 1;
-  line-height: 2em;
+  line-height: ${({ theme: { scale, spacing } }) => scale + spacing}em;
+  border-radius: ${({ theme: { scale, spacing } }) => spacing * 2}em;
   padding: 0 1em;
-  border-radius: ${({ theme: { spacing } }) => spacing}em;
-  color: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
-  border: 2px solid
-    hsl(0, 0%, ${({ theme: { isDark } }) => (isDark ? 20 : 80)}%);
-  background: var(--mono100, hsl(200, 5%, 100%));
+  color: ${mono(0)};
+  border: 2px solid ${mono(80)};
+  background: ${mono(100)};
   transition: background 0.1s ease;
   transition: border-color 0.1s ease;
   :focus {
-    color: var(--mono1000, black);
+    color: ${mono(0)};
     outline: none;
-    border: 2px solid var(--mono300, hsl(200, 5%, 70%));
+    border: 2px solid ${mono(30)};
   }
 `
 

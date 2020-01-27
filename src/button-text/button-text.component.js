@@ -1,5 +1,7 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+import { mono, primary } from '../theme'
 
 const Button = styled.button`
   height: 2em;
@@ -11,20 +13,20 @@ const Button = styled.button`
   cursor: pointer;
   transition: color 0.1s ease;
   background: none;
-  color: var(--primary600, hsl(200, 30%, 10%));
+  color: ${primary(60)};
   :hover,
   :focus {
-    color: var(--primary700, hsl(200, 30%, 15%));
+    color: ${primary(70)};
   }
   :active {
-    color: var(--primary800, hsl(200, 30%, 20%));
+    color: ${primary(80)};
   }
   :disabled {
-    color: var(--primary700, hsl(200, 10%, 40%));
+    color: ${primary(70)};
     cursor: auto;
   }
-`;
+`
 
-Button.propTypes = { onClick: PropTypes.function };
+Button.propTypes = { onClick: PropTypes.function }
 
-export default Button;
+export default Button

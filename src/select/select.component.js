@@ -14,7 +14,7 @@ const StyledSelect = styled.select`
   padding-left: 1em;
   box-sizing: border-box;
   margin: 0;
-  border-radius: var(--spacing_1, 1em);
+  border-radius: ${({ spacing }) => spacing}em;
   border: none;
   appearance: none;
   background-color: lightgray;

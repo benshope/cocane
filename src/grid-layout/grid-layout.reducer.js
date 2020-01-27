@@ -1,12 +1,19 @@
 import cell from '../cell'
 import cellReducer from '../cell.reducers'
+import arrayMove from 'array-move'
 
-import { ADD_CELL, REMOVE_CELL, CHANGE_CELL_TYPE } from './grid-layout.actions'
+import {
+  ADD_CELL,
+  REMOVE_CELL,
+  CHANGE_CELL_TYPE,
+  MOVE_CELL,
+} from './grid-layout.actions'
 
 // TODO break out anything non-layout
 // this should just set width & order
-export default (s = {}, a) =>
-  [
+export default (s = {}, a) => {
+  console.log(s, a)
+  return [
     cell.reducer,
     cellReducer,
     (state, action) => {
@@ -43,6 +50,17 @@ export default (s = {}, a) =>
         const { [payload]: omit, ...nextState } = state
         return nextState
       }
+      if (type === MOVE_CELL) {
+        const { id, newIndex, oldIndex } = payload
+        return {
+          ...state,
+          [id]: {
+            ...state[id],
+            value: arrayMove([...state[id].value], oldIndex, newIndex),
+          },
+        }
+      }
       return state
     },
   ].reduce((acc, r) => r(acc, a), s)
+}

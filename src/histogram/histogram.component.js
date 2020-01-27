@@ -5,9 +5,11 @@ import { extent, histogram, max } from 'd3-array'
 import { scaleLinear } from 'd3-scale'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
+import { mono, primary } from '../theme'
+
 const ThemedRect = styled.rect`
   transition: fill 0.1s ease;
-  fill: var(--primary600, hsl(200, 40%, 40%));
+  fill: ${primary(60)};
 `
 
 // TODO: make a more interesting/abstracted empty state

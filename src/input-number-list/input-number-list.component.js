@@ -6,11 +6,20 @@ import { component as Button } from '../button'
 import { component as ButtonText } from '../button-text'
 import { component as GridDiv } from '../grid'
 import { component as Input } from '../input-number'
+import { mono } from '../theme'
 
 // TODO just override column min size
 // also can that flex-basis go?
 const ContainerDiv = styled(GridDiv)`
-  grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(${({ theme: { scale } }) => scale * 10}rem, 1fr)
+  );
+  grid-gap: ${({ theme: { spacing } }) => spacing * 0.5}em;
   > * {
     flex: 1;
     flex-basis: 40%;
@@ -19,9 +28,8 @@ const ContainerDiv = styled(GridDiv)`
 
 const InputDiv = styled.div`
   position: relative;
-  height: 2em;
   input {
-    font-size: ${({ theme: { size } }) => size}em;
+    color: ${mono(0)};
     width: 100%;
     padding-right: 2em;
   }

@@ -1,11 +1,13 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
+import arrayMove from 'array-move'
 
 import { component as Button } from '../button'
 import { component as ButtonText } from '../button-text'
 import { component as CellTypePicker } from '../cell-picker'
 // import fileInput from "../file-input/file-input";
 import cell from '../cell'
+import { mono } from '../theme'
 
 import {
   sortableContainer,
@@ -67,19 +69,13 @@ const SortableItem = sortableElement(
 )
 
 const FlexLayoutDiv = styled.div`
-  font-family: 'Helvetica Neue', Helvetica, sans-serif;
-  background: gray;
+  background: ${mono(80)};
+  transition: background 0.1s ease;
   transition: color 0.1s ease;
-  color: black;
-  font-size: ${({ theme: { scale } }) => `${scale}em`};
   padding: ${({ theme: { spacing } }) => spacing * 0.5}em;
   display: grid;
   grid-auto-rows: auto;
   align-content: start;
-  * {
-    box-sizing: border-box;
-    transition: background 0.1s ease;
-  }
   grid-template-columns: ${({ theme: { scale } }) => {
     return `repeat(
     auto-fill,
@@ -89,8 +85,17 @@ const FlexLayoutDiv = styled.div`
 `
 
 const CellDiv = styled.div`
-  font-size: ${({ theme: { scale } }) => `${scale}em`};
-  background: ${({ theme: { isDark } }) => (isDark ? 'black' : 'white')};
+  &,
+  button,
+  input {
+    font-size: ${({ theme: { scale } }) => scale * 16}px;
+  }
+  box-sizing: border-box;
+  color: ${mono(0)};
+  background: ${mono(100)};
+  transition: background 0.1s ease;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+
   border-radius: ${({ theme: { spacing } }) => `${spacing * 0.25}em`};
   grid-column-end: ${({ gridColumnEnd }) => gridColumnEnd || 'span 1'};
   position: relative;
@@ -100,8 +105,7 @@ const CellDiv = styled.div`
     cursor: grab;
   }
   &.sorting {
-    box-shadow: 0.2em 0.2em 0.4em
-      ${({ theme: { isDark } }) => (isDark ? 'white' : 'black')};
+    box-shadow: 0.2em 0.2em 0.5em ${mono(60)};
   }
 `
 
@@ -159,9 +163,9 @@ const FlexLayout = ({
   addCell,
   changeCellType,
   removeCell,
+  moveCell,
   state = {},
 }) => {
-  const [cellIDs, setCellIDs] = React.useState(value)
   const [scale, setScale] = React.useState(1)
   const [isDark, setIsDark] = React.useState(false)
   // TODO make isEditing persisted state? or default on user?
@@ -170,19 +174,19 @@ const FlexLayout = ({
   const [spacing, setSpacing] = React.useState(1)
   // TODO make searchable
   // TODO create generic cell - intersection of all
-  console.log('spacing is: ', spacing)
-  const theme = { scale, isDark, spacing, hue }
+  const theme = {
+    scale,
+    isDark,
+    spacing,
+    hue,
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <SortableContainer
         helperClass="sorting"
         useDragHandle={true}
-        onSortEnd={items => {
-          console.log('onSortEnd', items)
-
-          setCellIDs(items)
-        }}
+        onSortEnd={({ newIndex, oldIndex }) => moveCell({ newIndex, oldIndex })}
         axis="xy"
       >
         <FlexLayoutHeaderDiv>
@@ -195,7 +199,7 @@ const FlexLayout = ({
               min={0.1}
               max={1}
               step={0.01}
-              onChange={e => setScale(e.currentTarget.value)}
+              onChange={e => setScale(parseFloat(e.currentTarget.value))}
             />
           </label>
           <label>
@@ -236,11 +240,7 @@ const FlexLayout = ({
               min={0}
               max={4}
               step={0.01}
-              onChange={e => {
-                const newSpacing = e.currentTarget.value
-                console.log('setting to', newSpacing)
-                setSpacing(newSpacing)
-              }}
+              onChange={e => setSpacing(parseFloat(e.currentTarget.value))}
             />
           </label>
         </FlexLayoutHeaderDiv>

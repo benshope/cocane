@@ -49,7 +49,7 @@ const addStoryWithStore = stories => ({ name, state }) => cell => {
     const cellStore = createStore((s = state, a) => {
       action(a)
       return cellReducer(cell.reducer ? cell.reducer(s, a) : s, a)
-    })
+    }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
     return (
       <Provider store={cellStore}>
         <div>
